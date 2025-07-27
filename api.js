@@ -114,7 +114,7 @@ function parseEIGP(raw) {
     const match = field.match(/^([0-9A-Z]{1,4})(.+)$/);
     if (match) {
       const [, key, value] = match;
-      const label = fieldMap[key]
+      const label = fieldMap[key] || key;
       result[label] = value;
     }
   }
@@ -122,7 +122,15 @@ function parseEIGP(raw) {
   return result;
 }
 
+// function customParse(raw){
+
+
+
+
+
+// }
 
 // Example use:
 const raw = "[)>06PQ1045-ND1P364019-0130PQ1045-NDK12432 TRAVIS FOSS P1K8573287310K1033329569D2310131TQJ13P11K14LTWQ311ZPICK12Z736098813Z99999920Z0000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 console.log(parseEIGP(raw));
+// console.log(customParse(raw))
