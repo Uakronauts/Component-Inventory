@@ -129,7 +129,7 @@ function customParse(raw){
     let fields = [
         "HEADER",
         "CUSTOMER_PART_NUMBER",
-        "MANUFACTURER_PART_NUMBER",
+        "SUPPLIER_PART_NUMBER",
         "DIGIKEY_PART_NUMBER",
         "PURCHASE_ORDER_NUMBER",
         "ORDER_NUMBER",
@@ -150,6 +150,11 @@ function customParse(raw){
     for (let i = 0; i<parsedFields.length; i++){
       outDict[fields[i]] = parsedFields[i];
     }
+
+    outDict["CUSTOMER_PART_NUMBER"] = outDict["CUSTOMER_PART_NUMBER"].slice(1);
+    outDict["SUPPLIER_PART_NUMBER"] = outDict["MANUFACTURER_PART_NUMBER"].slice(2);
+    outDict["DIGIKEY_PART_NUMBER"] = outDict["DIGIKEY_PART_NUMBER"].slice(3);
+    outDict["QUANTITY"] = outDict["QUANTITY"].slice(1);
     console.log(outDict)
  
 }
