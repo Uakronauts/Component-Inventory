@@ -49,6 +49,7 @@ setTimeout( () => {
             codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
               if (result) {
                 console.log(result)
+                document.getElementById("raw").innerText = result
                 document.getElementById('result').textContent = result.text
               }
               if (err && !(err instanceof ZXing.NotFoundException)) {
