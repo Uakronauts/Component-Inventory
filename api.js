@@ -1,7 +1,23 @@
 console.log("SIP")
 
 const hints = new Map();
-hints.set(ZXing.DecodeHintType.POSSIBLE_FORMATS, [ZXing.BarcodeFormat.DATA_MATRIX]);
+hints.set(ZXing.DecodeHintType.POSSIBLE_FORMATS, [
+ZXing.BarcodeFormat.CODE_128,
+  ZXing.BarcodeFormat.CODE_39,
+  ZXing.BarcodeFormat.CODE_93,
+  ZXing.BarcodeFormat.EAN_13,
+  ZXing.BarcodeFormat.EAN_8,
+  ZXing.BarcodeFormat.UPC_A,
+  ZXing.BarcodeFormat.UPC_E,
+  ZXing.BarcodeFormat.ITF,
+  ZXing.BarcodeFormat.CODABAR,
+  // 2D formats
+  ZXing.BarcodeFormat.QR_CODE,
+  ZXing.BarcodeFormat.DATA_MATRIX,
+  ZXing.BarcodeFormat.AZTEC,
+  ZXing.BarcodeFormat.PDF_417,
+  ZXing.BarcodeFormat.MAXICODE
+]);
 
 
 
