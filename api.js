@@ -114,7 +114,7 @@ function parseEIGP(raw) {
     const match = field.match(/^([0-9A-Z]{1,4})(.+)$/);
     if (match) {
       const [, key, value] = match;
-      const label = fieldMap[key] || key;
+      const label = fieldMap[key]
       result[label] = value;
     }
   }
