@@ -142,7 +142,7 @@ document.getElementById("add-part").addEventListener("click", () => {
   dataToSend["LOCATION"] = "NA12";
 
   console.log(dataToSend);
-  
+
   fetch(url, {
     method: "POST",
     headers: {
@@ -150,7 +150,7 @@ document.getElementById("add-part").addEventListener("click", () => {
     },
     body: JSON.stringify(dataToSend)
   })
-  .then(response => response.json())
+  .then(response => response.text())
   .then(data => console.log("Success:", data))
   .catch(error => console.error("Error:", error));
 })
