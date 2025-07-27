@@ -139,8 +139,10 @@ document.getElementById("add-part").addEventListener("click", () => {
   dataToSend["SUPPLIER_PART_NUMBER"] = lastScannedPart["SUPPLIER_PART_NUMBER"];
   dataToSend["DIGIKEY_PART_NUMBER"] = lastScannedPart["DIGIKEY_PART_NUMBER"];
   dataToSend["QUANTITY"] = lastScannedPart["QUANTITY"];
-  dataToSend["LOCATION"] = lastScannedPart["LOCATION"];
+  dataToSend["LOCATION"] = "NA12";
 
+  console.log(dataToSend);
+  
   fetch(url, {
     method: "POST",
     headers: {
