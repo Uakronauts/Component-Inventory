@@ -124,9 +124,33 @@ function parseEIGP(raw) {
 
 function customParse(raw){
 
-    let fields = raw.split('\x1D')
-    console.log(fields)
+    let parsedFields = raw.split('\x1D'); // []
+    console.log(parsedFields)
+    let fields = [
+        "HEADER",
+        "CUSTOMER_PART_NUMBER",
+        "MANUFACTURER_PART_NUMBER",
+        "DIGIKEY_PART_NUMBER",
+        "PURCHASE_ORDER_NUMBER",
+        "ORDER_NUMBER",
+        "INVOICE_NUMBER",
+        "DATE_CODE",
+        "LOT_CODE",
+        "PACKING_LIST_NUMBER",
+        "COUNTRY_ORIGIN",
+        "QUANTITY",
+        "LABEL_TYPE_DONTUSE",
+        "PARTID_DONTUSE",
+        "NOT_USED",
+        "PADDING"
+    ];
 
+    let outDict = {};
+
+    for (let i = 0; i<parsedFields.length; i++){
+      outDict[fields[i]] = parsedFields[i];
+    }
+    console.log(outDict)
  
 }
 
