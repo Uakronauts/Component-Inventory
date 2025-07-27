@@ -1,22 +1,21 @@
-console.log("SIP")
 
 const hints = new Map();
 hints.set(ZXing.DecodeHintType.POSSIBLE_FORMATS, [
-ZXing.BarcodeFormat.CODE_128,
-  ZXing.BarcodeFormat.CODE_39,
-  ZXing.BarcodeFormat.CODE_93,
-  ZXing.BarcodeFormat.EAN_13,
-  ZXing.BarcodeFormat.EAN_8,
-  ZXing.BarcodeFormat.UPC_A,
-  ZXing.BarcodeFormat.UPC_E,
-  ZXing.BarcodeFormat.ITF,
-  ZXing.BarcodeFormat.CODABAR,
-  // 2D formats
-  ZXing.BarcodeFormat.QR_CODE,
+//   ZXing.BarcodeFormat.CODE_128,
+//   ZXing.BarcodeFormat.CODE_39,
+//   ZXing.BarcodeFormat.CODE_93,
+//   ZXing.BarcodeFormat.EAN_13,
+//   ZXing.BarcodeFormat.EAN_8,
+//   ZXing.BarcodeFormat.UPC_A,
+//   ZXing.BarcodeFormat.UPC_E,
+//   ZXing.BarcodeFormat.ITF,
+//   ZXing.BarcodeFormat.CODABAR,
+//   // 2D formats
+//   ZXing.BarcodeFormat.QR_CODE,
   ZXing.BarcodeFormat.DATA_MATRIX,
-  ZXing.BarcodeFormat.AZTEC,
-  ZXing.BarcodeFormat.PDF_417,
-  ZXing.BarcodeFormat.MAXICODE
+  // ZXing.BarcodeFormat.AZTEC,
+  // ZXing.BarcodeFormat.PDF_417,
+  // ZXing.BarcodeFormat.MAXICODE
 ]);
 
 
@@ -76,9 +75,9 @@ setTimeout( () => {
         })
 
 
-    }
-    ,1000);
+    } ,1000);
 
+var lastScannedPart = {};
 
 function customParse(raw){
 
@@ -114,9 +113,39 @@ function customParse(raw){
     outDict["DIGIKEY_PART_NUMBER"] = outDict["DIGIKEY_PART_NUMBER"].slice(3);
     outDict["QUANTITY"] = outDict["QUANTITY"].slice(1);
 
+    lastScannedPart = outDict;
+
     return outDict
 }
 
 // Example use:
 const raw = "[)>06PQ1045-ND1P364019-0130PQ1045-NDK12432 TRAVIS FOSS P1K8573287310K1033329569D2310131TQJ13P11K14LTWQ311ZPICK12Z736098813Z99999920Z0000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 console.log(customParse(raw))
+
+let addPartTemplate = {
+  "SUPPLIER_PART_NUMBER": NaN,
+  "DIGIKEY_PART_NUMBER": NaN,
+  "QUANTITY": NaN,
+  "LOCATION": NaN
+}
+
+document.getElementById("add-part").addEventListener("click", () => {
+  let url = "https://prod-137.westus.logic.azure.com:443/workflows/e66cf225e85a4f4891acff029ac33c57/triggers/manual/paths/invoke?api-version=2016-06-01";
+  
+  let dataToSend = JSON.parse(JSON.stringify(addPartTemplate));
+  dataToSend["SUPPLIER_PART_NUMBER"] = lastScannedPart["SUPPLIER_PART_NUMBER"];
+  dataToSend["DIGIKEY_PART_NUMBER"] = lastScannedPart["DIGIKEY_PART_NUMBER"];
+  dataToSend["QUANTITY"] = lastScannedPart["QUANTITY"];
+  dataToSend["LOCATION"] = lastScannedPart["LOCATION"];
+
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(dataToSend)
+  })
+  .then(response => response.json())
+  .then(data => console.log("Success:", data))
+  .catch(error => console.error("Error:", error));
+})
