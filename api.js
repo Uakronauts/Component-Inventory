@@ -156,6 +156,7 @@ document.getElementById("add-part").addEventListener("click", () => {
 })
 
 document.getElementById("check-part").addEventListener("click", () => {
+  let url = "https://prod-189.westus.logic.azure.com:443/workflows/8c083ba653544d1797f2f18bf5b4a04e/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=5Ur2oLVi-sUyYXUc7lZksuaygzHt4oJF34G-1oVek3Y";
   fetch(url, {
     method: "POST",
     headers: {
