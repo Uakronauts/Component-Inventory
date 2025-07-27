@@ -122,15 +122,16 @@ function parseEIGP(raw) {
   return result;
 }
 
-// function customParse(raw){
+function customParse(raw){
 
+    let fields = raw.split('\x1D')
+    console.log(fields)
 
-
-
-
-// }
+ 
+}
 
 // Example use:
 const raw = "[)>06PQ1045-ND1P364019-0130PQ1045-NDK12432 TRAVIS FOSS P1K8573287310K1033329569D2310131TQJ13P11K14LTWQ311ZPICK12Z736098813Z99999920Z0000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
 console.log(parseEIGP(raw));
 // console.log(customParse(raw))
+customParse(raw)
