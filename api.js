@@ -138,7 +138,7 @@ document.getElementById("add-part").addEventListener("click", () => {
   let dataToSend = JSON.parse(JSON.stringify(addPartTemplate));
   dataToSend["SUPPLIER_PART_NUMBER"] = lastScannedPart["SUPPLIER_PART_NUMBER"];
   dataToSend["DIGIKEY_PART_NUMBER"] = lastScannedPart["DIGIKEY_PART_NUMBER"];
-  dataToSend["QUANTITY"] = lastScannedPart["QUANTITY"];
+  dataToSend["QUANTITY"] = parseInt(lastScannedPart["QUANTITY"]);
   dataToSend["LOCATION"] = "NA12";
 
   console.log(dataToSend);
