@@ -51,6 +51,9 @@ setTimeout( () => {
                 console.log(result)
                 document.getElementById("raw").innerText = result
                 document.getElementById('result').textContent = result.text
+                let parsed = parseEIGP(result);
+                console.log(parsed);
+                document.getElementById("parsed").innerText = parsed
               }
               if (err && !(err instanceof ZXing.NotFoundException)) {
                 console.error(err)
@@ -74,3 +77,31 @@ setTimeout( () => {
 
     }
     ,1000);
+
+function parseEIGP(raw) {
+  const GS = String.fromCharCode(29);
+  const RS = String.fromCharCode(30);
+  const EOT = String.fromCharCode(4);
+
+  // Strip [)> and RS header
+  if (raw.startsWith("[)>")) raw = raw.substring(4);
+  if (raw[0] === RS) raw = raw.substring(1);
+  if (raw.endsWith(EOT)) raw = raw.slice(0, -1);
+
+  const fields = raw.split(GS);
+  const result = {};
+
+  for (const field of fields) {
+    const match = field.match(/^([0-9A-Z]{1,3})(.+)$/);
+    if (match) {
+      const [, key, value] = match;
+      result[key] = value;
+    }
+  }
+
+  return result;
+}
+
+// Example use:
+const raw = "[)>06PQ1045-ND1P364019-0130PQ1045-NDK12432 TRAVIS FOSS P1K8573287310K1033329569D2310131TQJ13P11K14LTWQ311ZPICK12Z736098813Z99999920Z0000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+console.log(parseEIGP(raw));
