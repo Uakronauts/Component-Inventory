@@ -54,7 +54,7 @@ setTimeout( () => {
                 let parsed = parseEIGP(result.text);
                 console.log("PARSED")
                 console.log(JSON.stringify(parsed));
-                document.getElementById("parsed").innerText = parsed
+                document.getElementById("parsed").innerText = JSON.stringify(parsed)
               }
               if (err && !(err instanceof ZXing.NotFoundException)) {
                 console.error(err)
