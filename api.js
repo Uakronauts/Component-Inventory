@@ -152,7 +152,7 @@ function customParse(raw){
     }
 
     outDict["CUSTOMER_PART_NUMBER"] = outDict["CUSTOMER_PART_NUMBER"].slice(1);
-    outDict["SUPPLIER_PART_NUMBER"] = outDict["MANUFACTURER_PART_NUMBER"].slice(2);
+    outDict["SUPPLIER_PART_NUMBER"] = outDict["SUPPLIER_PART_NUMBER"].slice(2);
     outDict["DIGIKEY_PART_NUMBER"] = outDict["DIGIKEY_PART_NUMBER"].slice(3);
     outDict["QUANTITY"] = outDict["QUANTITY"].slice(1);
     console.log(outDict)
