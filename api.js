@@ -51,7 +51,8 @@ setTimeout( () => {
                 console.log(result)
                 document.getElementById("raw").innerText = result
                 document.getElementById('result').textContent = result.text
-                let parsed = parseEIGP(result);
+                let parsed = parseEIGP(result.text);
+                console.log("{ARSED")
                 console.log(parsed);
                 document.getElementById("parsed").innerText = parsed
               }
@@ -103,5 +104,5 @@ function parseEIGP(raw) {
 }
 
 // Example use:
-const raw = "[)>06PQ1045-ND1P364019-0130PQ1045-NDK12432 TRAVIS FOSS P1K8573287310K1033329569D2310131TQJ13P11K14LTWQ311ZPICK12Z736098813Z99999920Z0000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-console.log(parseEIGP(raw));
+// const raw = "[)>06PQ1045-ND1P364019-0130PQ1045-NDK12432 TRAVIS FOSS P1K8573287310K1033329569D2310131TQJ13P11K14LTWQ311ZPICK12Z736098813Z99999920Z0000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
+// console.log(parseEIGP(raw));
