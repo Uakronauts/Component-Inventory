@@ -154,3 +154,16 @@ document.getElementById("add-part").addEventListener("click", () => {
   .then(data => console.log("Success:", data))
   .catch(error => console.error("Error:", error));
 })
+
+document.getElementById("check-part").addEventListener("click", () => {
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({"SUPPLIER_PARt_NUMBER":lastScannedPart["SUPPLIER_PART_NUMBER"]})
+  })
+  .then(response => response.text())
+  .then(data => console.log("Success:", data))
+  .catch(error => console.error("Error:", error));
+})
