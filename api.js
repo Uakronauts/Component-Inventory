@@ -133,7 +133,7 @@ let addPartTemplate = {
 }
 
 document.getElementById("add-part").addEventListener("click", () => {
-  let url = "https://prod-137.westus.logic.azure.com:443/workflows/e66cf225e85a4f4891acff029ac33c57/triggers/manual/paths/invoke?api-version=2016-06-01";
+  let url = "https://prod-137.westus.logic.azure.com:443/workflows/e66cf225e85a4f4891acff029ac33c57/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=2MbPtQdohr0BVcbW0rUtSTphE9HR6dypFNDDc2J0kE4";
   
   let dataToSend = JSON.parse(JSON.stringify(addPartTemplate));
   dataToSend["SUPPLIER_PART_NUMBER"] = lastScannedPart["SUPPLIER_PART_NUMBER"];
