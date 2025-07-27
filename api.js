@@ -1,9 +1,12 @@
 console.log("SIP")
 
+const hints = new Map();
+hints.set(ZXing.DecodeHintType.POSSIBLE_FORMATS, [ZXing.BarcodeFormat.PDF_417]);
+
 
 setTimeout( () => {
     let selectedDeviceId;
-      const codeReader = new ZXing.BrowserMultiFormatReader()
+      const codeReader = new ZXing.BrowserMultiFormatReader(hints)
       console.log('ZXing code reader initialized')
       codeReader.listVideoInputDevices()
         .then((videoInputDevices) => {
