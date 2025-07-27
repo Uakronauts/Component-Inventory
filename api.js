@@ -51,7 +51,7 @@ setTimeout( () => {
                 console.log(result)
                 document.getElementById("raw").innerText = result
                 document.getElementById('result').textContent = result.text
-                let parsed = parseEIGP(result.text);
+                let parsed = customParse(result.text);
                 console.log("PARSED")
                 console.log(JSON.stringify(parsed));
                 document.getElementById("parsed").innerText = JSON.stringify(parsed)
@@ -79,48 +79,6 @@ setTimeout( () => {
     }
     ,1000);
 
-function parseEIGP(raw) {
-  const GS = String.fromCharCode(29);
-  const RS = String.fromCharCode(30);
-  const EOT = String.fromCharCode(4);
-
-  const fieldMap = {
-    'PQ': 'DigiKey_Part_Number',
-    '1P': 'Manufacturer_Part_Number',
-    '30P': 'DK_Part_Number_Redundant',
-    'K':  'Purchase_Order',
-    '1K': 'Sales_Order_Number',
-    '10K':'Invoice_Number',
-    '9D': 'Date_Code',
-    '1T': 'Lot_Code',
-    '11K':'Line_Item_Index',
-    '4L': 'Country_of_Origin',
-    'Q':  'Quantity',
-    '11Z':'Pick_Code',
-    '12Z':'Machine_ID',
-    '13Z':'Packing_ID',
-    '20Z':'Extra_Info'
-  };
-
-  // Clean up barcode
-  if (raw.startsWith("[)>")) raw = raw.substring(4);
-  if (raw[0] === RS) raw = raw.substring(1);
-  if (raw.endsWith(EOT)) raw = raw.slice(0, -1);
-
-  const fields = raw.split(GS);
-  const result = {};
-
-  for (const field of fields) {
-    const match = field.match(/^([0-9A-Z]{1,4})(.+)$/);
-    if (match) {
-      const [, key, value] = match;
-      const label = fieldMap[key] || key;
-      result[label] = value;
-    }
-  }
-
-  return result;
-}
 
 function customParse(raw){
 
@@ -155,12 +113,10 @@ function customParse(raw){
     outDict["SUPPLIER_PART_NUMBER"] = outDict["SUPPLIER_PART_NUMBER"].slice(2);
     outDict["DIGIKEY_PART_NUMBER"] = outDict["DIGIKEY_PART_NUMBER"].slice(3);
     outDict["QUANTITY"] = outDict["QUANTITY"].slice(1);
-    console.log(outDict)
- 
+
+    return outDict
 }
 
 // Example use:
 const raw = "[)>06PQ1045-ND1P364019-0130PQ1045-NDK12432 TRAVIS FOSS P1K8573287310K1033329569D2310131TQJ13P11K14LTWQ311ZPICK12Z736098813Z99999920Z0000000000000000000000000000000000000000000000000000000000000000000000000000000000000";
-console.log(parseEIGP(raw));
-// console.log(customParse(raw))
-customParse(raw)
+console.log(customParse(raw))
