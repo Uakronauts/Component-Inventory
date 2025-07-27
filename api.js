@@ -1,7 +1,8 @@
 console.log("SIP")
 
 const hints = new Map();
-hints.set(ZXing.DecodeHintType.POSSIBLE_FORMATS, [ZXing.BarcodeFormat.PDF_417]);
+hints.set(ZXing.DecodeHintType.POSSIBLE_FORMATS, [ZXing.BarcodeFormat.DATA_MATRIX]);
+
 
 
 setTimeout( () => {
