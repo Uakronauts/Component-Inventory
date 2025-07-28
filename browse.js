@@ -1,5 +1,13 @@
 function fetchAndDisplayParts(){
-    fetch(url) // replace with your deployment URL
+    fetch(url,{
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            mode: "browse",
+            token: token
+        })
+    }
+    ) // replace with your deployment URL
     .then(res => res.json())
     .then(parts => {
       const tbody = document.querySelector("#partsTable tbody");
@@ -41,7 +49,8 @@ function adjustQuantity(supplierPN, delta) {
     body: JSON.stringify({
       mode: "adjust",
       SUPPLIER_PART_NUMBER: supplierPN,
-      DELTA: delta
+      DELTA: delta,
+      token: token
     })
   }).then(() => fetchAndDisplayParts());
 }
@@ -56,7 +65,8 @@ function changeLocation(supplierPN) {
     body: JSON.stringify({
       mode: "relocate",
       SUPPLIER_PART_NUMBER: supplierPN,
-      LOCATION: newLocation
+      LOCATION: newLocation,
+      token: token
     })
   }).then(() => fetchAndDisplayParts());
 }
