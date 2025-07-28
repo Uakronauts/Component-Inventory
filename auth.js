@@ -1,4 +1,5 @@
 var token = "";
+var firstLoad = true;
 
 function decodeJWT(token) {
 
@@ -28,4 +29,8 @@ function decodeJWT(token) {
     // console.log("  Unique ID: " + responsePayload.sub);
     // console.log("  Profile image URL: " + responsePayload.picture);
     // console.log("  Email: " + responsePayload.email);
+    if (firstLoad == true){
+        firstLoad = false;
+        fetchAndDisplayParts();
+    }
 }
