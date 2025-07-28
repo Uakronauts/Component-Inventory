@@ -132,16 +132,16 @@ let addPartTemplate = {
   "LOCATION": NaN
 }
 
-document.getElementById("add-part").addEventListener("click", () => {
-  let url = `https://script.google.com/macros/s/AKfycbz5yFcrNpSNJ8rMRPXMMwucua0IoWCP63B4-rEzAxhQ7l2SAojcmhxWOnTvQuy8jIUP/exec?data=${encodeURIComponent(JSON.stringify(payload))}`;
-  
+document.getElementById("add-part").addEventListener("click", () => {  
   let dataToSend = JSON.parse(JSON.stringify(addPartTemplate));
   dataToSend["SUPPLIER_PART_NUMBER"] = lastScannedPart["SUPPLIER_PART_NUMBER"];
   dataToSend["DIGIKEY_PART_NUMBER"] = lastScannedPart["DIGIKEY_PART_NUMBER"];
   dataToSend["QUANTITY"] = parseInt(lastScannedPart["QUANTITY"]);
   dataToSend["LOCATION"] = "NA12";
 
-  console.log(dataToSend);
+  let url = `https://script.google.com/macros/s/AKfycbz5yFcrNpSNJ8rMRPXMMwucua0IoWCP63B4-rEzAxhQ7l2SAojcmhxWOnTvQuy8jIUP/exec?data=${encodeURIComponent(JSON.stringify(dataToSend))}`;
+
+  console.log(url);
 
   fetch(url)
   .then(response => response.text())
