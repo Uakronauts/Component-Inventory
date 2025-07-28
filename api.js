@@ -216,6 +216,9 @@ document.getElementById("subtract-part").addEventListener("click", () => {
     })
   })
   .then(res => res.text())
-  .then(data => console.log("Response:", data))
+  .then(data => {
+    console.log("Response:", data)
+    checkPart()
+  })
   .catch(err => console.error("Error:", err));
 })

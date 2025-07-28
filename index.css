@@ -53,3 +53,11 @@ th, td {
 th {
   background-color: #e9ecef;
 }
+
+#startButton{
+    background-color: green;
+}
+
+#resetButton{
+    background-color: red;
+}
