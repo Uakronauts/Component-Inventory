@@ -274,7 +274,7 @@ fetch(url, {
 };
 
 
-function showCheckmark(duration = 1500) {
+function showCheckmark(duration = 3000) {
   const overlay = document.getElementById("checkmark-overlay");
   overlay.style.display = "block";
   setTimeout(() => {
