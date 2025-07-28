@@ -5,14 +5,21 @@
 </head>
 <body>
 
-  <div
-      id="g_id_onload"
-      data-auto_prompt="false"
-      data-callback="handleCredentialResponse"
-      data-client_id="308207169103-r19k2o9nd02vg56p7fnlevj82fc2j06p.apps.googleusercontent.com"
-    ></div>
-    <!-- g_id_signin places the button on a page and supports customization -->
-    <div class="g_id_signin"></div>
+    <div id="g_id_onload"
+     data-client_id="308207169103-r19k2o9nd02vg56p7fnlevj82fc2j06p.apps.googleusercontent.com"
+     data-callback="handleCredentialResponse"
+     data-auto_prompt="true"
+     data-auto_select="true">
+    </div>
+    <div class="g_id_signin"
+     data-type="standard"
+     data-size="large"
+     data-theme="outline"
+     data-text="sign_in_with"
+     data-shape="rectangular"
+     data-logo_alignment="left">
+    </div>
+
 
 
 
@@ -39,7 +46,7 @@
     <pre><code id="result"></code></pre>
     <p id="raw" class="hidden">raw</p>
     <p id="parsed" class="hidden">parsed</p>
-<div class="container">
+  <div class="container">
     <div class="column">
       <h2>Scanned Data</h2>
       <table>
