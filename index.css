@@ -1,4 +1,7 @@
 #video{
-    height: 50%;
-    width: auto;
+    height: auto;
+    width: 90vw;
+    position: relative;
+    transform: translateX(-50%);
+    left: 50%
 }
