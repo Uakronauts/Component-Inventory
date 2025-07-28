@@ -18,7 +18,7 @@ hints.set(ZXing.DecodeHintType.POSSIBLE_FORMATS, [
   // ZXing.BarcodeFormat.MAXICODE
 ]);
 
-var codeReader;
+var codeReader, sourceSelect, sourceOption, sourceSelectPanel;
 
 setTimeout( () => {
     let selectedDeviceId;
@@ -26,11 +26,11 @@ setTimeout( () => {
       console.log('ZXing code reader initialized')
       codeReader.listVideoInputDevices()
         .then((videoInputDevices) => {
-          const sourceSelect = document.getElementById('sourceSelect')
+          sourceSelect = document.getElementById('sourceSelect')
           selectedDeviceId = videoInputDevices[0].deviceId
           if (videoInputDevices.length >= 1) {
             videoInputDevices.forEach((element) => {
-              const sourceOption = document.createElement('option')
+              sourceOption = document.createElement('option')
               sourceOption.text = element.label
               sourceOption.value = element.deviceId
               sourceSelect.appendChild(sourceOption)
@@ -40,7 +40,7 @@ setTimeout( () => {
               selectedDeviceId = sourceSelect.value;
             };
 
-            const sourceSelectPanel = document.getElementById('sourceSelectPanel')
+            sourceSelectPanel = document.getElementById('sourceSelectPanel')
             sourceSelectPanel.style.display = 'block'
           }
 
