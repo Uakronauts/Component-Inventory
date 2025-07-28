@@ -124,31 +124,21 @@ function fakeData(){
   console.log(customParse(raw))
 }
 
-
-let addPartTemplate = {
-  "SUPPLIER_PART_NUMBER": NaN,
-  "DIGIKEY_PART_NUMBER": NaN,
-  "QUANTITY": NaN,
-  "LOCATION": NaN
-}
+const url = "https://script.google.com/macros/s/AKfycbx5eDGiHa3NCjjrFYuWrmii8wVTiTApn8_MY4Sk7v0f75UEz0A9mwPt9zgD9BbeIsJP/exec";
 
 document.getElementById("add-part").addEventListener("click", () => {
-  let url = "https://script.google.com/macros/s/AKfycbx5eDGiHa3NCjjrFYuWrmii8wVTiTApn8_MY4Sk7v0f75UEz0A9mwPt9zgD9BbeIsJP/exec";
-  
-  let dataToSend = JSON.parse(JSON.stringify(addPartTemplate));
-  dataToSend["SUPPLIER_PART_NUMBER"] = lastScannedPart["SUPPLIER_PART_NUMBER"];
-  dataToSend["DIGIKEY_PART_NUMBER"] = lastScannedPart["DIGIKEY_PART_NUMBER"];
-  dataToSend["QUANTITY"] = parseInt(lastScannedPart["QUANTITY"]);
-  dataToSend["LOCATION"] = "NA12";
-
-  console.log(dataToSend);
-
   fetch(url, {
     method: "POST",
     headers: {
       "Content-Type": "text/plain"
     },
-    body: JSON.stringify(dataToSend)
+    body: JSON.stringify({
+      "SUPPLIER_PART_NUMBER": lastScannedPart["SUPPLIER_PART_NUMBER"],
+      "DIGIKEY_PART_NUMBER": lastScannedPart["DIGIKEY_PART_NUMBER"],
+      "QUANTITY": lastScannedPart["DIGIKEY_PART_NUMBER"],
+      "LOCATION": "NA12",
+      "mode": "add"
+    })
   })
   .then(response => response.text())
   .then(data => console.log("Success:", data))
@@ -156,15 +146,30 @@ document.getElementById("add-part").addEventListener("click", () => {
 })
 
 document.getElementById("check-part").addEventListener("click", () => {
-  let url = "https://prod-189.westus.logic.azure.com:443/workflows/8c083ba653544d1797f2f18bf5b4a04e/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=5Ur2oLVi-sUyYXUc7lZksuaygzHt4oJF34G-1oVek3Y";
-  fetch(url, {
+    fetch(url, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({"SUPPLIER_PARt_NUMBER":lastScannedPart["SUPPLIER_PART_NUMBER"]})
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify({
+      SUPPLIER_PART_NUMBER: "Q1045-ND",
+      mode: "get"
+    })
   })
-  .then(response => response.text())
-  .then(data => console.log("Success:", data))
-  .catch(error => console.error("Error:", error));
+  .then(res => res.text())
+  .then(data => console.log("Part info:", data))
+  .catch(err => console.error("Error:", err));
+})
+
+document.getElementById("subtract-part").addEventListener("click", () => {
+    fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify({
+      SUPPLIER_PART_NUMBER: "Q1045-ND",
+      QUANTITY: 2,
+      mode: "subtract"
+    })
+  })
+  .then(res => res.text())
+  .then(data => console.log("Response:", data))
+  .catch(err => console.error("Error:", err));
 })
