@@ -97,7 +97,7 @@ function adjustQuantity(supplierPN, delta) {
 }
 
 function setQuantity(supplierPartNumber, newQuantity) {
-  fetch(GOOGLE_SCRIPT_URL, {
+  fetch(url, {
     method: "POST",
     headers: { "Content-Type": "text/plain" },
     body: JSON.stringify({
