@@ -115,6 +115,16 @@ function customParse(raw){
 
     lastScannedPart = outDict;
 
+
+    document.getElementById('scanned-table-body').innerHTML = `
+      <tr>
+        <td>${outDict.SUPPLIER_PART_NUMBER}</td>
+        <td>${outDict.DIGIKEY_PART_NUMBER}</td>
+        <td>${outDict.QUANTITY}</td>
+        <td>${outDict.LOCATION}</td>
+      </tr>
+    `;
+
     return outDict
 }
 
