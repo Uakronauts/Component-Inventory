@@ -135,7 +135,7 @@ document.getElementById("add-part").addEventListener("click", () => {
     body: JSON.stringify({
       "SUPPLIER_PART_NUMBER": lastScannedPart["SUPPLIER_PART_NUMBER"],
       "DIGIKEY_PART_NUMBER": lastScannedPart["DIGIKEY_PART_NUMBER"],
-      "QUANTITY": lastScannedPart["DIGIKEY_PART_NUMBER"],
+      "QUANTITY": lastScannedPart["QUANTITY"],
       "LOCATION": "NA12",
       "mode": "add"
     })
@@ -150,7 +150,7 @@ document.getElementById("check-part").addEventListener("click", () => {
     method: "POST",
     headers: { "Content-Type": "text/plain" },
     body: JSON.stringify({
-      SUPPLIER_PART_NUMBER: "Q1045-ND",
+      SUPPLIER_PART_NUMBER: lastScannedPart["SUPPLIER_PART_NUMBER"],
       mode: "get"
     })
   })
@@ -164,7 +164,7 @@ document.getElementById("subtract-part").addEventListener("click", () => {
     method: "POST",
     headers: { "Content-Type": "text/plain" },
     body: JSON.stringify({
-      SUPPLIER_PART_NUMBER: "Q1045-ND",
+      SUPPLIER_PART_NUMBER: lastScannedPart["SUPPLIER_PART_NUMBER"],
       QUANTITY: 2,
       mode: "subtract"
     })
