@@ -121,7 +121,7 @@ function customParse(raw){
         <td>${outDict.SUPPLIER_PART_NUMBER}</td>
         <td>${outDict.DIGIKEY_PART_NUMBER}</td>
         <td>${outDict.QUANTITY}</td>
-        <td>${outDict.LOCATION}</td>
+        <td>${outDict.ORDER_NUMBER}</td>
       </tr>
     `;
 
@@ -155,21 +155,25 @@ document.getElementById("add-part").addEventListener("click", () => {
   .catch(error => console.error("Error:", error));
 })
 
-document.getElementById("check-part").addEventListener("click", () => {
-    fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "text/plain" },
-    body: JSON.stringify({
-      SUPPLIER_PART_NUMBER: lastScannedPart["SUPPLIER_PART_NUMBER"],
-      mode: "get"
+function checkPart(){
+  fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain" },
+      body: JSON.stringify({
+        SUPPLIER_PART_NUMBER: lastScannedPart["SUPPLIER_PART_NUMBER"],
+        mode: "get"
+      })
     })
-  })
-  .then(res => res.text())
-  .then(data => {
-    console.log("Part info:", data)
-    console.log(JSON.parse(data))
-  })
-  .catch(err => console.error("Error:", err));
+    .then(res => res.text())
+    .then(data => {
+      console.log("Part info:", data)
+      console.log(JSON.parse(data))
+    })
+    .catch(err => console.error("Error:", err));
+}
+
+document.getElementById("check-part").addEventListener("click", () => {
+    checkPart();
 })
 
 document.getElementById("subtract-part").addEventListener("click", () => {
