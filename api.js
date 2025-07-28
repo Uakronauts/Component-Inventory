@@ -138,7 +138,7 @@ function fakeData(){
   console.log(customParse(raw))
 }
 
-const url = "https://script.google.com/macros/s/AKfycbx5eDGiHa3NCjjrFYuWrmii8wVTiTApn8_MY4Sk7v0f75UEz0A9mwPt9zgD9BbeIsJP/exec";
+const url = "https://script.google.com/macros/s/AKfycbxmCclSl1FJxoZDDWAU_hVKPnQoVfNFi7hTNNCH2m9RdR9EWSDvSRnJpKdR4jcC8Nhj/exec";
 
 document.getElementById("add-part").addEventListener("click", () => {
   showDbSpinner();
