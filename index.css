@@ -115,8 +115,8 @@ button#confirmSubtract {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 1000px;
-  color: limegreen;
+  font-size: 1000px !important;
+  color: limegreen !important;
   display: none;
   z-index: 5;
   pointer-events: none;
