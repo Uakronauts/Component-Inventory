@@ -170,13 +170,10 @@ function checkPart(){
     .then(data => {
       console.log("Part info:", data)
       console.log(JSON.parse(data))
-      try{
-        var results = JSON.parse(data)["part"];
-      }
-      catch {
-        results = "";
-      }
-      if (results["message"] == ""){
+      var results = JSON.parse(data)["part"];
+
+
+      if (!results["success"]){
           document.getElementById('db-table-body').innerHTML = `
           <tr>
             <td>${lastScannedPart.SUPPLIER_PART_NUMBER}</td>
