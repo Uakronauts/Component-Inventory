@@ -16,18 +16,47 @@ function fetchAndDisplayParts(){
       parts.forEach(part => {
         const row = document.createElement("tr");
 
-        row.innerHTML = `
-          <td>${part.SUPPLIER_PART_NUMBER}</td>
-          <td>${part.DIGIKEY_PART_NUMBER}</td>
-          <td>${part.QUANTITY}</td>
-          <td>${part.LOCATION}</td>
-          <td>
-            <button onclick="adjustQuantity('${part.SUPPLIER_PART_NUMBER}', 1)">+</button>
-            <button onclick="adjustQuantity('${part.SUPPLIER_PART_NUMBER}', -1)">-</button>
-            <button onclick="changeLocation('${part.SUPPLIER_PART_NUMBER}')">✎</button>
-          </td>
-        `;
+        // Create and fill each cell
+        const supplierTd = document.createElement("td");
+        supplierTd.textContent = part.SUPPLIER_PART_NUMBER;
 
+        const digikeyTd = document.createElement("td");
+        digikeyTd.textContent = part.DIGIKEY_PART_NUMBER;
+
+        const qtyTd = document.createElement("td");
+        qtyTd.textContent = part.QUANTITY;
+
+        const locationTd = document.createElement("td");
+        locationTd.textContent = part.LOCATION;
+
+        // Action buttons
+        const actionsTd = document.createElement("td");
+
+        const plusBtn = document.createElement("button");
+        plusBtn.textContent = "+";
+        plusBtn.addEventListener("click", () => adjustQuantity(part.SUPPLIER_PART_NUMBER, 1));
+
+        const minusBtn = document.createElement("button");
+        minusBtn.textContent = "-";
+        minusBtn.addEventListener("click", () => adjustQuantity(part.SUPPLIER_PART_NUMBER, -1));
+
+        const editBtn = document.createElement("button");
+        editBtn.textContent = "✎";
+        editBtn.addEventListener("click", () => changeLocation(part.SUPPLIER_PART_NUMBER));
+
+        // Append buttons to action cell
+        actionsTd.appendChild(plusBtn);
+        actionsTd.appendChild(minusBtn);
+        actionsTd.appendChild(editBtn);
+
+        // Append all cells to the row
+        row.appendChild(supplierTd);
+        row.appendChild(digikeyTd);
+        row.appendChild(qtyTd);
+        row.appendChild(locationTd);
+        row.appendChild(actionsTd);
+
+        // Add the row to the table
         tbody.appendChild(row);
       });
     });
