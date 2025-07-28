@@ -171,7 +171,13 @@ function fakeData(){
 const url = "https://script.google.com/macros/s/AKfycbxmCclSl1FJxoZDDWAU_hVKPnQoVfNFi7hTNNCH2m9RdR9EWSDvSRnJpKdR4jcC8Nhj/exec";
 
 document.getElementById("add-part").addEventListener("click", () => {
+    let location = prompt("Enter part location:", "NA12");
+  if (location === null || location.trim() === "") {
+    location = "undefined";
+  }
+
   showDbSpinner();
+
   fetch(url, {
     method: "POST",
     headers: {
@@ -181,20 +187,20 @@ document.getElementById("add-part").addEventListener("click", () => {
       "SUPPLIER_PART_NUMBER": lastScannedPart["SUPPLIER_PART_NUMBER"],
       "DIGIKEY_PART_NUMBER": lastScannedPart["DIGIKEY_PART_NUMBER"],
       "QUANTITY": lastScannedPart["QUANTITY"],
-      "LOCATION": "NA12",
+      "LOCATION": location,
       "mode": "add",
       "token": token
     })
   })
   .then(response => response.text())
   .then(data => {
-    console.log("Success:", data)
-    checkPart()}
-  )
+    console.log("Success:", data);
+    checkPart();
+  })
   .catch(error => console.error("Error:", error))
   .finally(() => {
     hideDbSpinner();
-  })
+  });
 })
 
 function checkPart(){
