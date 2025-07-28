@@ -110,7 +110,7 @@ function setQuantity(supplierPartNumber, newQuantity) {
   .then(response => response.text())
   .then(data => {
     console.log("Quantity set:", data);
-    refreshTable(); // Optional: re-fetch table data to reflect changes
+    fetchAndDisplayParts(); 
   })
   .catch(err => {
     console.error("Error setting quantity:", err);
