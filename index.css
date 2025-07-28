@@ -116,7 +116,7 @@ button#confirmSubtract {
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 1000px !important;
-  color: limegreen !important;
+  filter: invert(57%) sepia(16%) saturate(2194%) hue-rotate(71deg) brightness(110%) contrast(91%);
   display: none;
   z-index: 5;
   pointer-events: none;
