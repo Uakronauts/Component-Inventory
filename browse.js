@@ -1,5 +1,5 @@
 function fetchAndDisplayParts(){
-    fetch("https://script.google.com/macros/s/XXXXXXXXXXX/exec?mode=browse") // replace with your deployment URL
+    fetch(url) // replace with your deployment URL
     .then(res => res.json())
     .then(parts => {
       const tbody = document.querySelector("#partsTable tbody");
@@ -35,7 +35,6 @@ document.getElementById("searchBox").addEventListener("input", () => {
 
 
 function adjustQuantity(supplierPN, delta) {
-  const url = "https://script.google.com/macros/s/XXXXXXXXXXX/exec"; // replace with yours
   fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -51,7 +50,6 @@ function changeLocation(supplierPN) {
   const newLocation = prompt("Enter new location:");
   if (!newLocation) return;
 
-  const url = "https://script.google.com/macros/s/XXXXXXXXXXX/exec"; // replace with yours
   fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
