@@ -18,10 +18,9 @@ hints.set(ZXing.DecodeHintType.POSSIBLE_FORMATS, [
   // ZXing.BarcodeFormat.MAXICODE
 ]);
 
-var codeReader, sourceSelect, sourceOption, sourceSelectPanel;
+var codeReader, sourceSelect, sourceOption, sourceSelectPanel, selectedDeviceId;
 
 setTimeout( () => {
-    let selectedDeviceId;
       codeReader = new ZXing.BrowserMultiFormatReader(hints)
       console.log('ZXing code reader initialized')
       codeReader.listVideoInputDevices()
