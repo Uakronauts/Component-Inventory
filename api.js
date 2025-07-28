@@ -133,7 +133,7 @@ let addPartTemplate = {
 }
 
 document.getElementById("add-part").addEventListener("click", () => {
-  let url = "https://script.google.com/macros/s/AKfycbyMQo4WC6_N_6xM0c348RzWo-4W-68NXlk38M_B2pAghdop4MXl5iafnRGKtk44l_ux/exec";
+  let url = "https://script.google.com/macros/s/AKfycbyqeRJ2Dv0h3E66X-F4cZErJorWVdWb7x6sNxfiIRw3-fQznmSPPsStfp9QwSoH5khj/exec";
   
   let dataToSend = JSON.parse(JSON.stringify(addPartTemplate));
   dataToSend["SUPPLIER_PART_NUMBER"] = lastScannedPart["SUPPLIER_PART_NUMBER"];
