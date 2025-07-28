@@ -54,6 +54,8 @@ setTimeout( () => {
                 console.log("PARSED")
                 console.log(JSON.stringify(parsed));
                 document.getElementById("parsed").innerText = JSON.stringify(parsed)
+
+                showCheckmark()
               }
               if (err && !(err instanceof ZXing.NotFoundException)) {
                 console.error(err)
@@ -207,21 +209,6 @@ document.getElementById("check-part").addEventListener("click", () => {
 
 document.getElementById("subtract-part").addEventListener("click", () => {
   openSubtractModal()
-  //   fetch(url, {
-  //   method: "POST",
-  //   headers: { "Content-Type": "text/plain" },
-  //   body: JSON.stringify({
-  //     SUPPLIER_PART_NUMBER: lastScannedPart["SUPPLIER_PART_NUMBER"],
-  //     QUANTITY: 2,
-  //     mode: "subtract"
-  //   })
-  // })
-  // .then(res => res.text())
-  // .then(data => {
-  //   console.log("Response:", data)
-  //   checkPart()
-  // })
-  // .catch(err => console.error("Error:", err));
 })
 
 
@@ -273,3 +260,12 @@ fetch(url, {
     alert("Failed to subtract.");
   });
 };
+
+
+function showCheckmark(duration = 1500) {
+  const overlay = document.getElementById("checkmark-overlay");
+  overlay.style.display = "block";
+  setTimeout(() => {
+    overlay.style.display = "none";
+  }, duration);
+}

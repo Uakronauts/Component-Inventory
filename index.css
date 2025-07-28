@@ -103,3 +103,22 @@ button#confirmSubtract {
   border-radius: 4px;
   cursor: pointer;
 }
+
+
+.video-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+#checkmark-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 80px;
+  color: limegreen;
+  display: none;
+  z-index: 5;
+  pointer-events: none;
+  text-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
