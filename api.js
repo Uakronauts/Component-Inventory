@@ -125,6 +125,8 @@ function customParse(raw){
       </tr>
     `;
 
+    checkPart()
+
     return outDict
 }
 
@@ -168,6 +170,18 @@ function checkPart(){
     .then(data => {
       console.log("Part info:", data)
       console.log(JSON.parse(data))
+      let results = JSON.parse(data)["part"];
+
+      document.getElementById('db-table-body').innerHTML = `
+      <tr>
+        <td>${results.SUPPLIER_PART_NUMBER}</td>
+        <td>${results.DIGIKEY_PART_NUMBER}</td>
+        <td>${results.QUANTITY}</td>
+        <td>${results.ORDER_NUMBER}</td>
+      </tr>
+    `;
+
+
     })
     .catch(err => console.error("Error:", err));
 }
