@@ -5,8 +5,19 @@
 </head>
 <body>
 
-    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+  <div
+      id="g_id_onload"
+      data-auto_prompt="false"
+      data-callback="handleCredentialResponse"
+      data-client_id="308207169103-r19k2o9nd02vg56p7fnlevj82fc2j06p.apps.googleusercontent.com"
+    ></div>
+    <!-- g_id_signin places the button on a page and supports customization -->
+    <div class="g_id_signin"></div>
 
+
+
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+    <script src="https://accounts.google.com/gsi/client" async></script>
 
     <div>
         <a class="button" id="startButton">Start</a>
@@ -97,5 +108,7 @@
 
 
     <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest/umd/index.min.js"></script>
+    <script src="auth.js"></script>
+
     <script src="api.js"></script>
 </body>
