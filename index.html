@@ -26,9 +26,47 @@
 
     <label>Result:</label>
     <pre><code id="result"></code></pre>
-    <p id="raw">raw</p>
-    <p id="parsed">parsed</p>
+    <p id="raw" class="hidden">raw</p>
+    <p id="parsed" class="hidden">parsed</p>
+<div class="container">
+    <div class="column">
+      <h2>Scanned Data</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Supplier PN</th>
+            <th>Digi-Key PN</th>
+            <th>Quantity</th>
+            <th>Location</th>
+          </tr>
+        </thead>
+        <tbody id="scanned-table-body">
+          <tr>
+            <td>–</td><td>–</td><td>–</td><td>–</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
+    <div class="column">
+      <h2>Database Data</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Supplier PN</th>
+            <th>Digi-Key PN</th>
+            <th>Quantity</th>
+            <th>Location</th>
+          </tr>
+        </thead>
+        <tbody id="db-table-body">
+          <tr>
+            <td>–</td><td>–</td><td>–</td><td>–</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
     <button id="add-part">Add part</button>
     <button id="check-part">Check part</button>
     <button id="subtract-part">Subtract part</button>
