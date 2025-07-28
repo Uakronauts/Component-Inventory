@@ -171,17 +171,26 @@ function checkPart(){
       console.log("Part info:", data)
       console.log(JSON.parse(data))
       let results = JSON.parse(data)["part"];
-
-      document.getElementById('db-table-body').innerHTML = `
-      <tr>
-        <td>${results.SUPPLIER_PART_NUMBER}</td>
-        <td>${results.DIGIKEY_PART_NUMBER}</td>
-        <td>${results.QUANTITY}</td>
-        <td>${results.ORDER_NUMBER}</td>
-      </tr>
-    `;
-
-
+      if (results["message"] == "Part not found."){
+          document.getElementById('db-table-body').innerHTML = `
+          <tr>
+            <td>${lastScannedPart.SUPPLIER_PART_NUMBER}</td>
+            <td>${lastScannedPart.DIGIKEY_PART_NUMBER}</td>
+            <td>0</td>
+            <td>N/A</td>
+          </tr>
+        `;
+      }
+      else {
+          document.getElementById('db-table-body').innerHTML = `
+          <tr>
+            <td>${results.SUPPLIER_PART_NUMBER}</td>
+            <td>${results.DIGIKEY_PART_NUMBER}</td>
+            <td>${results.QUANTITY}</td>
+            <td>${results.ORDER_NUMBER}</td>
+          </tr>
+        `;
+      }
     })
     .catch(err => console.error("Error:", err));
 }
