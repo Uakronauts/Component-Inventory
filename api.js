@@ -171,6 +171,7 @@ function checkPart(){
       console.log("Part info:", data)
       console.log(JSON.parse(data))
       let results = JSON.parse(data)["part"];
+      console.log(results)
       if (results["message"] == "Part not found."){
           document.getElementById('db-table-body').innerHTML = `
           <tr>
