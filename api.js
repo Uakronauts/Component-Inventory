@@ -44,26 +44,26 @@ setTimeout( () => {
             sourceSelectPanel.style.display = 'block'
           }
 
-          document.getElementById('startButton').addEventListener('click', () => {
-            codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
-              if (result) {
-                console.log(result)
-                document.getElementById("raw").innerText = result
-                document.getElementById('result').textContent = result.text
-                let parsed = customParse(result.text);
-                console.log("PARSED")
-                console.log(JSON.stringify(parsed));
-                document.getElementById("parsed").innerText = JSON.stringify(parsed)
+          // document.getElementById('startButton').addEventListener('click', () => {
+          //   codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
+          //     if (result) {
+          //       console.log(result)
+          //       document.getElementById("raw").innerText = result
+          //       document.getElementById('result').textContent = result.text
+          //       let parsed = customParse(result.text);
+          //       console.log("PARSED")
+          //       console.log(JSON.stringify(parsed));
+          //       document.getElementById("parsed").innerText = JSON.stringify(parsed)
 
-                showCheckmark()
-              }
-              if (err && !(err instanceof ZXing.NotFoundException)) {
-                console.error(err)
-                document.getElementById('result').textContent = err
-              }
-            })
-            console.log(`Started continous decode from camera with id ${selectedDeviceId}`)
-          })
+          //       showCheckmark()
+          //     }
+          //     if (err && !(err instanceof ZXing.NotFoundException)) {
+          //       console.error(err)
+          //       document.getElementById('result').textContent = err
+          //     }
+          //   })
+          //   console.log(`Started continous decode from camera with id ${selectedDeviceId}`)
+          // })
 
           document.getElementById('resetButton').addEventListener('click', () => {
             codeReader.reset()
