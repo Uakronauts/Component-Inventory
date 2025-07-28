@@ -133,7 +133,7 @@ let addPartTemplate = {
 }
 
 document.getElementById("add-part").addEventListener("click", () => {
-  let url = "https://script.google.com/macros/s/AKfycbz5yFcrNpSNJ8rMRPXMMwucua0IoWCP63B4-rEzAxhQ7l2SAojcmhxWOnTvQuy8jIUP/exec";
+  let url = `https://script.google.com/macros/s/AKfycbz5yFcrNpSNJ8rMRPXMMwucua0IoWCP63B4-rEzAxhQ7l2SAojcmhxWOnTvQuy8jIUP/exec?data=${encodeURIComponent(JSON.stringify(payload))}`;
   
   let dataToSend = JSON.parse(JSON.stringify(addPartTemplate));
   dataToSend["SUPPLIER_PART_NUMBER"] = lastScannedPart["SUPPLIER_PART_NUMBER"];
@@ -143,13 +143,7 @@ document.getElementById("add-part").addEventListener("click", () => {
 
   console.log(dataToSend);
 
-  fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(dataToSend)
-  })
+  fetch(url)
   .then(response => response.text())
   .then(data => console.log("Success:", data))
   .catch(error => console.error("Error:", error));
