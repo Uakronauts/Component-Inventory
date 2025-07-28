@@ -170,7 +170,7 @@ function checkPart(){
     .then(data => {
       console.log("Part info:", data)
       console.log(JSON.parse(data))
-      var results = JSON.parse(data)["part"];
+      var results = JSON.parse(data);
 
 
       if (!results["success"]){
@@ -184,12 +184,13 @@ function checkPart(){
         `;
       }
       else {
+        var partResults = results["part"]
           document.getElementById('db-table-body').innerHTML = `
           <tr>
-            <td>${results.SUPPLIER_PART_NUMBER}</td>
-            <td>${results.DIGIKEY_PART_NUMBER}</td>
-            <td>${results.QUANTITY}</td>
-            <td>${results.ORDER_NUMBER}</td>
+            <td>${partResults.SUPPLIER_PART_NUMBER}</td>
+            <td>${partResults.DIGIKEY_PART_NUMBER}</td>
+            <td>${partResults.QUANTITY}</td>
+            <td>${partResults.ORDER_NUMBER}</td>
           </tr>
         `;
       }
