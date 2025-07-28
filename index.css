@@ -167,7 +167,8 @@ button#confirmSubtract {
 }
 
 .action-button {
-  width: 10vw;
+  width: 30vw;
   height: auto;
   min-height: 5vh;
+  font-size: x-large;
 }
