@@ -258,7 +258,7 @@ fetch(url, {
     headers: { "Content-Type": "text/plain" },
     body: JSON.stringify({
       SUPPLIER_PART_NUMBER: lastScannedPart["SUPPLIER_PART_NUMBER"],
-      QUANTITY: 2,
+      QUANTITY: qty,
       mode: "subtract"
     })
   })
