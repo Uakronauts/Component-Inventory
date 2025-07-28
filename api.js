@@ -153,7 +153,10 @@ document.getElementById("add-part").addEventListener("click", () => {
     })
   })
   .then(response => response.text())
-  .then(data => console.log("Success:", data))
+  .then(data => {
+    console.log("Success:", data)
+    checkPart()}
+  )
   .catch(error => console.error("Error:", error));
 })
 
