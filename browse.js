@@ -132,7 +132,9 @@ function changeLocation(supplierPN) {
       LOCATION: newLocation,
       token: token
     })
-  }).then(() => fetchAndDisplayParts());
+  }).then(() => {
+    setTimeout(fetchAndDisplayParts, 1000);
+  });
 }
 
 function filterTable() {
