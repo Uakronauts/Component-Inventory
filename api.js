@@ -155,7 +155,10 @@ document.getElementById("check-part").addEventListener("click", () => {
     })
   })
   .then(res => res.text())
-  .then(data => console.log("Part info:", data))
+  .then(data => {
+    console.log("Part info:", data)
+    console.log(JSON.parse(data))
+  })
   .catch(err => console.error("Error:", err));
 })
 
