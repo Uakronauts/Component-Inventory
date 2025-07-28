@@ -152,7 +152,8 @@ document.getElementById("add-part").addEventListener("click", () => {
       "DIGIKEY_PART_NUMBER": lastScannedPart["DIGIKEY_PART_NUMBER"],
       "QUANTITY": lastScannedPart["QUANTITY"],
       "LOCATION": "NA12",
-      "mode": "add"
+      "mode": "add",
+      "token": token
     })
   })
   .then(response => response.text())
@@ -173,7 +174,8 @@ function checkPart(){
       headers: { "Content-Type": "text/plain" },
       body: JSON.stringify({
         SUPPLIER_PART_NUMBER: lastScannedPart["SUPPLIER_PART_NUMBER"],
-        mode: "get"
+        mode: "get",
+        token: token
       })
     })
     .then(res => res.text())
@@ -255,7 +257,8 @@ fetch(url, {
     body: JSON.stringify({
       SUPPLIER_PART_NUMBER: lastScannedPart["SUPPLIER_PART_NUMBER"],
       QUANTITY: qty,
-      mode: "subtract"
+      mode: "subtract",
+      token: token
     })
   })
   .then(res => res.text())

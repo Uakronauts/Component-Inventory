@@ -1,3 +1,5 @@
+var token = "";
+
 function decodeJWT(token) {
 
     let base64Url = token.split(".")[1];
@@ -18,7 +20,7 @@ function decodeJWT(token) {
     console.log("Encoded JWT ID token: " + response.credential);
 
     const responsePayload = decodeJWT(response.credential);
-
+    token = response.credential;
     console.log("Decoded JWT ID token fields:");
     console.log("  Full Name: " + responsePayload.name);
     console.log("  Given Name: " + responsePayload.given_name);
