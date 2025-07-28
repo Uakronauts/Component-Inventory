@@ -139,7 +139,7 @@ document.getElementById("add-part").addEventListener("click", () => {
   dataToSend["QUANTITY"] = parseInt(lastScannedPart["QUANTITY"]);
   dataToSend["LOCATION"] = "NA12";
 
-  let url = `https://script.google.com/macros/s/AKfycbz5yFcrNpSNJ8rMRPXMMwucua0IoWCP63B4-rEzAxhQ7l2SAojcmhxWOnTvQuy8jIUP/exec?data=${encodeURIComponent(JSON.stringify(dataToSend))}`;
+  let url = `https://script.google.com/macros/s/AKfycby9fGusdiCEbm0sv4oewim0fFfJ-Tp57b-Zh85u7TWa4rIav7-ZDASDK8PECEOGguga/exec?data=${encodeURIComponent(JSON.stringify(dataToSend))}`;
 
   console.log(url);
 
