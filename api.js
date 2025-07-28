@@ -132,18 +132,24 @@ let addPartTemplate = {
   "LOCATION": NaN
 }
 
-document.getElementById("add-part").addEventListener("click", () => {  
+document.getElementById("add-part").addEventListener("click", () => {
+  let url = "https://script.google.com/macros/s/AKfycbzwyWXsbC8C39_T9f8xGelgPxAlIGYwFZiSAHYYIwv3k-4q6CH_ghO9x0i5r8FFyAXK/exec";
+  
   let dataToSend = JSON.parse(JSON.stringify(addPartTemplate));
   dataToSend["SUPPLIER_PART_NUMBER"] = lastScannedPart["SUPPLIER_PART_NUMBER"];
   dataToSend["DIGIKEY_PART_NUMBER"] = lastScannedPart["DIGIKEY_PART_NUMBER"];
   dataToSend["QUANTITY"] = parseInt(lastScannedPart["QUANTITY"]);
   dataToSend["LOCATION"] = "NA12";
 
-  let url = `https://script.google.com/macros/s/AKfycby9fGusdiCEbm0sv4oewim0fFfJ-Tp57b-Zh85u7TWa4rIav7-ZDASDK8PECEOGguga/exec?data=${encodeURIComponent(JSON.stringify(dataToSend))}`;
+  console.log(dataToSend);
 
-  console.log(url);
-
-  fetch(url)
+  fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain"
+    },
+    body: JSON.stringify(dataToSend)
+  })
   .then(response => response.text())
   .then(data => console.log("Success:", data))
   .catch(error => console.error("Error:", error));
