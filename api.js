@@ -141,6 +141,7 @@ function fakeData(){
 const url = "https://script.google.com/macros/s/AKfycbx5eDGiHa3NCjjrFYuWrmii8wVTiTApn8_MY4Sk7v0f75UEz0A9mwPt9zgD9BbeIsJP/exec";
 
 document.getElementById("add-part").addEventListener("click", () => {
+  showDbSpinner();
   fetch(url, {
     method: "POST",
     headers: {
@@ -159,10 +160,14 @@ document.getElementById("add-part").addEventListener("click", () => {
     console.log("Success:", data)
     checkPart()}
   )
-  .catch(error => console.error("Error:", error));
+  .catch(error => console.error("Error:", error))
+  .finally(() => {
+    hideDbSpinner();
+  })
 })
 
 function checkPart(){
+  showDbSpinner();
   fetch(url, {
       method: "POST",
       headers: { "Content-Type": "text/plain" },
@@ -200,7 +205,10 @@ function checkPart(){
         `;
       }
     })
-    .catch(err => console.error("Error:", err));
+    .catch(err => console.error("Error:", err))
+    .finally(() => {
+      hideDbSpinner();
+    })
 }
 
 document.getElementById("check-part").addEventListener("click", () => {
@@ -240,6 +248,7 @@ confirmBtn.onclick = () => {
     alert("Please enter a valid quantity.");
     return;
   }
+  showDbSpinner();
 fetch(url, {
     method: "POST",
     headers: { "Content-Type": "text/plain" },
@@ -258,7 +267,10 @@ fetch(url, {
   .catch(err => {
     console.error("Error:", err);
     alert("Failed to subtract.");
-  });
+  })
+  .finally(() => {
+    hideDbSpinner();
+  })
 };
 
 
@@ -268,4 +280,12 @@ function showCheckmark(duration = 1500) {
   setTimeout(() => {
     overlay.style.display = "none";
   }, duration);
+}
+
+function showDbSpinner() {
+  document.getElementById("db-spinner").style.display = "inline-block";
+}
+
+function hideDbSpinner() {
+  document.getElementById("db-spinner").style.display = "none";
 }
