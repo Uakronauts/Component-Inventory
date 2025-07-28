@@ -21,11 +21,11 @@ function decodeJWT(token) {
 
     const responsePayload = decodeJWT(response.credential);
     token = response.credential;
-    console.log("Decoded JWT ID token fields:");
-    console.log("  Full Name: " + responsePayload.name);
-    console.log("  Given Name: " + responsePayload.given_name);
-    console.log("  Family Name: " + responsePayload.family_name);
-    console.log("  Unique ID: " + responsePayload.sub);
-    console.log("  Profile image URL: " + responsePayload.picture);
-    console.log("  Email: " + responsePayload.email);
+    // console.log("Decoded JWT ID token fields:");
+    // console.log("  Full Name: " + responsePayload.name);
+    // console.log("  Given Name: " + responsePayload.given_name);
+    // console.log("  Family Name: " + responsePayload.family_name);
+    // console.log("  Unique ID: " + responsePayload.sub);
+    // console.log("  Profile image URL: " + responsePayload.picture);
+    // console.log("  Email: " + responsePayload.email);
 }
