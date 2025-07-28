@@ -28,7 +28,7 @@
     <script src="https://accounts.google.com/gsi/client" async></script>
 
     <div>
-        <a class="button" id="startButton">Start</a>
+        <a class="button" id="startButton" class="hidden">Start</a>
         <a class="button" id="resetButton">Reset</a>
     </div>
 
@@ -41,6 +41,9 @@
     <div class="video-wrapper">
         <video id="video" style="border: 1px solid gray"></video>
         <div id="checkmark-overlay">&#x2714;</div>
+        <div id="start-overlay" onclick="startScanner()">
+          Click to Start Camera
+        </div>
     </div>
 
     <label>Result:</label>
