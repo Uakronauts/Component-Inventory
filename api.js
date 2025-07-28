@@ -206,7 +206,54 @@ document.getElementById("check-part").addEventListener("click", () => {
 })
 
 document.getElementById("subtract-part").addEventListener("click", () => {
-    fetch(url, {
+  openSubtractModal()
+  //   fetch(url, {
+  //   method: "POST",
+  //   headers: { "Content-Type": "text/plain" },
+  //   body: JSON.stringify({
+  //     SUPPLIER_PART_NUMBER: lastScannedPart["SUPPLIER_PART_NUMBER"],
+  //     QUANTITY: 2,
+  //     mode: "subtract"
+  //   })
+  // })
+  // .then(res => res.text())
+  // .then(data => {
+  //   console.log("Response:", data)
+  //   checkPart()
+  // })
+  // .catch(err => console.error("Error:", err));
+})
+
+
+
+
+
+
+
+
+const modal = document.getElementById("subtractModal");
+const closeBtn = document.querySelector(".close");
+const confirmBtn = document.getElementById("confirmSubtract");
+const input = document.getElementById("subtractQty");
+
+// Open the modal
+function openSubtractModal() {
+  input.value = "";
+  modal.style.display = "block";
+}
+
+// Close the modal
+closeBtn.onclick = () => modal.style.display = "none";
+window.onclick = e => { if (e.target === modal) modal.style.display = "none"; }
+
+// Handle submit
+confirmBtn.onclick = () => {
+  const qty = parseInt(input.value);
+  if (!qty || qty < 1) {
+    alert("Please enter a valid quantity.");
+    return;
+  }
+fetch(url, {
     method: "POST",
     headers: { "Content-Type": "text/plain" },
     body: JSON.stringify({
@@ -218,7 +265,11 @@ document.getElementById("subtract-part").addEventListener("click", () => {
   .then(res => res.text())
   .then(data => {
     console.log("Response:", data)
+    modal.style.display = "none";
     checkPart()
   })
-  .catch(err => console.error("Error:", err));
-})
+  .catch(err => {
+    console.error("Error:", err);
+    alert("Failed to subtract.");
+  });
+};
