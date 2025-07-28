@@ -1,7 +1,7 @@
 function fetchAndDisplayParts(){
     fetch(url,{
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "text/plain" },
         body: JSON.stringify({
             mode: "browse",
             token: token
@@ -45,7 +45,7 @@ document.getElementById("searchBox").addEventListener("input", () => {
 function adjustQuantity(supplierPN, delta) {
   fetch(url, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "text/plain" },
     body: JSON.stringify({
       mode: "adjust",
       SUPPLIER_PART_NUMBER: supplierPN,
@@ -61,7 +61,7 @@ function changeLocation(supplierPN) {
 
   fetch(url, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "text/plain" },
     body: JSON.stringify({
       mode: "relocate",
       SUPPLIER_PART_NUMBER: supplierPN,
