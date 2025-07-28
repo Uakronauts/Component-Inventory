@@ -25,6 +25,18 @@ function fetchAndDisplayParts(){
 
         const qtyTd = document.createElement("td");
         qtyTd.textContent = part.QUANTITY;
+        qtyTd.style.cursor = "pointer";
+        qtyTd.title = "Click to edit quantity";
+        qtyTd.addEventListener("click", () => {
+          const newQty = prompt(`Set new quantity for ${part.SUPPLIER_PART_NUMBER}:`, part.QUANTITY);
+          if (newQty === null) return; // user cancelled
+          const intQty = parseInt(newQty);
+          if (!isNaN(intQty)) {
+            setQuantity(part.SUPPLIER_PART_NUMBER, intQty);
+          } else {
+            alert("Invalid quantity");
+          }
+        });
 
         const locationTd = document.createElement("td");
         locationTd.textContent = part.LOCATION;
@@ -83,6 +95,29 @@ function adjustQuantity(supplierPN, delta) {
     })
   }).then(() => fetchAndDisplayParts());
 }
+
+function setQuantity(supplierPartNumber, newQuantity) {
+  fetch(GOOGLE_SCRIPT_URL, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify({
+      mode: "set",
+      SUPPLIER_PART_NUMBER: supplierPartNumber,
+      QUANTITY: newQuantity,
+      token: token
+    })
+  })
+  .then(response => response.text())
+  .then(data => {
+    console.log("Quantity set:", data);
+    refreshTable(); // Optional: re-fetch table data to reflect changes
+  })
+  .catch(err => {
+    console.error("Error setting quantity:", err);
+    alert("Failed to set quantity");
+  });
+}
+
 
 function changeLocation(supplierPN) {
   const newLocation = prompt("Enter new location:");
