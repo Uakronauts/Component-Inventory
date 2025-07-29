@@ -12,6 +12,8 @@
   height: 30vh;
   top: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
   background: rgba(0, 0, 0, 0.6);
   color: white;
   display: flex;
@@ -23,6 +25,11 @@
   text-align: center;
   padding: 1em;
   cursor: pointer;
+}
+
+.video-wrapper {
+  position: relative;
+  display: inline-block;
 }
 
 .hidden {
@@ -121,12 +128,6 @@ button#confirmSubtract {
   color: white;
   border-radius: 4px;
   cursor: pointer;
-}
-
-
-.video-wrapper {
-  position: relative;
-  display: inline-block;
 }
 
 #checkmark-overlay {
