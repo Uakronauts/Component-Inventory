@@ -72,7 +72,8 @@ setTimeout( () => {
 
         })
         .catch((err) => {
-          console.error(err)
+          // console.error(err)
+          console.log("No camera found.")
         })
 
 

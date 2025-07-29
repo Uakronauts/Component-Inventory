@@ -18,7 +18,8 @@ function decodeJWT(token) {
 
 function handleCredentialResponse(response) {
 
-    console.log("Encoded JWT ID token: " + response.credential);
+    // console.log("Encoded JWT ID token: " + response.credential);
+    console.log("JWT Token Acquired.")
 
     const responsePayload = decodeJWT(response.credential);
     token = response.credential;
