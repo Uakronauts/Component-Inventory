@@ -312,7 +312,6 @@ fetch(url, {
   })
 };
 
-
 function showCheckmark(duration = 3000) {
   const overlay = document.getElementById("checkmark-overlay");
   overlay.style.display = "block";
@@ -321,10 +320,15 @@ function showCheckmark(duration = 3000) {
   }, duration);
 }
 
+let dbSpinnerRefCount = 0;
 function showDbSpinner() {
+  dbSpinnerRefCount++;
   document.getElementById("db-spinner").style.display = "inline-block";
 }
 
 function hideDbSpinner() {
-  document.getElementById("db-spinner").style.display = "none";
+  dbSpinnerRefCount = Math.max(0, dbSpinnerRefCount - 1);
+  if (dbSpinnerRefCount === 0) {
+    document.getElementById("db-spinner").style.display = "none";
+  }
 }
