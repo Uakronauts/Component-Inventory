@@ -12,3 +12,40 @@ document.getElementById("submitPrMode").addEventListener("click", () => {
   console.log("Selected for PR:", selectedParts);
   submitPurchaseRequest(selectedParts);
 });
+
+function submitPurchaseRequest() {
+  const selectedPartNumbers = [];
+
+  // Find all checked checkboxes in the table
+  document.querySelectorAll(".pr-checkbox:checked").forEach(checkbox => {
+    const partId = checkbox.dataset.digikey;
+    if (partId) selectedPartNumbers.push(partId);
+  });
+
+  if (selectedPartNumbers.length === 0) {
+    alert("No parts selected.");
+    return;
+  }
+
+  showDbSpinner();
+
+  fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify({
+      mode: "purchaseRequest",
+      token: token,
+      digikeyPartNumbers: selectedPartNumbers
+    })
+  })
+  .then(res => res.text())
+  .then(response => {
+    alert("Purchase request submitted:\n" + response);
+  })
+  .catch(err => {
+    console.error("PR Error:", err);
+    alert("Error submitting purchase request.");
+  })
+  .finally(() => hideDbSpinner());
+}
+
