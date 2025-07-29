@@ -112,10 +112,12 @@ th {
   display: none; /* Hidden by default */
   position: fixed;
   z-index: 10;
-  left: 0; top: 0;
+  left: 50%; top: 0;
   width: 60vw; height: 60vw;
   overflow: auto;
   background-color: rgba(0,0,0,0.5);
+  transform: translateX(-50%);
+  font-size: x-large;
 }
 
 .modal-content {
