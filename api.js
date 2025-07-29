@@ -220,23 +220,84 @@ function fakeData(){
 
 const url = "https://script.google.com/macros/s/AKfycbxmCclSl1FJxoZDDWAU_hVKPnQoVfNFi7hTNNCH2m9RdR9EWSDvSRnJpKdR4jcC8Nhj/exec";
 
+// document.getElementById("add-part").addEventListener("click", () => {
+//     let location = prompt("Enter part location:", "NA12");
+//   if (location === null || location.trim() === "") {
+//     location = "undefined";
+//   }
+
+//   showDbSpinner();
+
+//   fetch(url, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "text/plain"
+//     },
+//     body: JSON.stringify({
+//       "SUPPLIER_PART_NUMBER": lastScannedPart["SUPPLIER_PART_NUMBER"],
+//       "DIGIKEY_PART_NUMBER": lastScannedPart["DIGIKEY_PART_NUMBER"],
+//       "QUANTITY": lastScannedPart["QUANTITY"],
+//       "LOCATION": location,
+//       "mode": "add",
+//       "token": token
+//     })
+//   })
+//   .then(response => response.text())
+//   .then(data => {
+//     console.log("Success:", data);
+//     checkPart();
+//     fetchAndDisplayParts();
+//   })
+//   .catch(error => console.error("Error:", error))
+//   .finally(() => {
+//     hideDbSpinner();
+//   });
+// })
+
+const addModal = document.getElementById("addModal");
+const addClose = document.getElementById("addClose");
+const addQtyInput = document.getElementById("addQty");
+const addLocationInput = document.getElementById("addLocation");
+
 document.getElementById("add-part").addEventListener("click", () => {
-    let location = prompt("Enter part location:", "NA12");
-  if (location === null || location.trim() === "") {
-    location = "undefined";
+  // Set placeholder for quantity based on scanned data
+  const scannedQty = parseInt(lastScannedPart?.QUANTITY || "");
+  addQtyInput.placeholder = !isNaN(scannedQty) ? scannedQty : "e.g. 100";
+  addQtyInput.value = "";
+  addLocationInput.value = "";
+
+  addModal.style.display = "block";
+});
+
+addClose.onclick = () => addModal.style.display = "none";
+window.addEventListener("click", (e) => {
+  if (e.target === addModal) addModal.style.display = "none";
+});
+
+document.getElementById("confirmAdd").addEventListener("click", () => {
+  const quantity = parseInt(addQtyInput.value || addQtyInput.placeholder);
+  const location = addLocationInput.value.trim() || "undefined";
+
+  if (!lastScannedPart || !lastScannedPart["SUPPLIER_PART_NUMBER"]) {
+    alert("No scanned part to add.");
+    return;
   }
 
+  if (isNaN(quantity) || quantity <= 0) {
+    alert("Enter a valid quantity.");
+    return;
+  }
+
+  addModal.style.display = "none";
   showDbSpinner();
 
   fetch(url, {
     method: "POST",
-    headers: {
-      "Content-Type": "text/plain"
-    },
+    headers: { "Content-Type": "text/plain" },
     body: JSON.stringify({
       "SUPPLIER_PART_NUMBER": lastScannedPart["SUPPLIER_PART_NUMBER"],
       "DIGIKEY_PART_NUMBER": lastScannedPart["DIGIKEY_PART_NUMBER"],
-      "QUANTITY": lastScannedPart["QUANTITY"],
+      "QUANTITY": quantity,
       "LOCATION": location,
       "mode": "add",
       "token": token
@@ -249,10 +310,9 @@ document.getElementById("add-part").addEventListener("click", () => {
     fetchAndDisplayParts();
   })
   .catch(error => console.error("Error:", error))
-  .finally(() => {
-    hideDbSpinner();
-  });
-})
+  .finally(() => hideDbSpinner());
+});
+
 
 function checkPart(){
   showDbSpinner();
