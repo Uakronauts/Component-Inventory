@@ -76,7 +76,7 @@ setTimeout( () => {
         })
 
 
-    } ,1000);
+} ,1000);
 
     
 function startScanner() {
@@ -102,6 +102,23 @@ function startScanner() {
   })
   console.log(`Started continous decode from camera with id ${selectedDeviceId}`)
 }
+
+function stopScanner() {
+  // Stop the code reader
+  if (codeReader) {
+    codeReader.reset(); // Stops video stream and decoding
+  }
+
+  // Show the overlay again
+  const overlay = document.getElementById("start-overlay");
+  overlay.style.display = "flex"; // or "block" depending on your CSS layout
+
+  // Optionally clear any previous results
+  document.getElementById("raw").innerText = "";
+  document.getElementById("result").textContent = "";
+  document.getElementById("parsed").innerText = "";
+}
+
 
 document.getElementById("start-overlay").addEventListener("click", ()=>{
   startScanner()
@@ -318,6 +335,7 @@ function showCheckmark(duration = 3000) {
   overlay.style.display = "block";
   setTimeout(() => {
     overlay.style.display = "none";
+    stopScanner();
   }, duration);
 }
 
