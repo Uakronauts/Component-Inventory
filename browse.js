@@ -42,6 +42,15 @@ function fetchAndDisplayParts(){
       const locationTd = document.createElement("td");
       locationTd.textContent = part.LOCATION;
 
+      const typeTd = document.createElement("td");
+      typeTd.textContent = part.TYPE;
+
+      const valueTd = document.createElement("td");
+      valueTd.textContent = part.VALUE;
+
+      const footprintTd = document.createElement("td");
+      footprintTd.textContent = part.FOOTPRINT;
+
       // Action buttons
       const actionsTd = document.createElement("td");
 
@@ -67,6 +76,9 @@ function fetchAndDisplayParts(){
       row.appendChild(digikeyTd);
       row.appendChild(qtyTd);
       row.appendChild(locationTd);
+      row.appendChild(typeTd);
+      row.appendChild(valueTd);
+      row.appendChild(footprintTd);
       row.appendChild(actionsTd);
 
       // Add the row to the table
