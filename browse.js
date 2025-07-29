@@ -154,6 +154,22 @@ function renderPartsTable(parts) {
       }
     });
 
+    if (prMode) {
+      const checkboxTd = document.createElement("td");
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+      checkbox.className = "pr-checkbox";
+      checkbox.dataset.partnum = part.DIGIKEY_PART_NUMBER;
+      checkboxTd.appendChild(checkbox);
+      row.appendChild(checkboxTd);
+    }
+
+    if (prMode) {
+      const th = document.createElement("th");
+      th.textContent = "Select";
+      document.querySelector("#partsTable thead tr").prepend(th);
+    }
+
     const locationTd = document.createElement("td");
     locationTd.textContent = part.LOCATION;
 
