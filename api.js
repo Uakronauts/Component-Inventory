@@ -255,19 +255,15 @@ const url = "https://script.google.com/macros/s/AKfycbxmCclSl1FJxoZDDWAU_hVKPnQo
 // })
 
 const addModal = document.getElementById("addModal");
-const addClose = document.getElementById("addClose");
 const addQtyInput = document.getElementById("addQty");
-const addLocationInput = document.getElementById("addLocation");
+const addLocationInput = document.getElementById("addLocationInput");
+const addClose = document.querySelector("#addModal .close");
 
 document.getElementById("add-part").addEventListener("click", () => {
-  // Set placeholder for quantity based on scanned data
   const scannedQty = parseInt(lastScannedPart?.QUANTITY || "");
   addQtyInput.placeholder = !isNaN(scannedQty) ? scannedQty : "e.g. 100";
-  document.getElementById("addQty").value = lastScannedPart?.QUANTITY || "";
-
-  addQtyInput.value = "";
+  addQtyInput.value = lastScannedPart?.QUANTITY || "";
   addLocationInput.value = "";
-
   addModal.style.display = "block";
 });
 
@@ -276,6 +272,7 @@ if (addClose && addModal) {
     addModal.style.display = "none";
   });
 
+  // Close modal when clicking outside it
   window.addEventListener("click", (e) => {
     if (e.target === addModal) {
       addModal.style.display = "none";
