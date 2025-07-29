@@ -196,6 +196,7 @@ document.getElementById("add-part").addEventListener("click", () => {
   .then(data => {
     console.log("Success:", data);
     checkPart();
+    fetchAndDisplayParts();
   })
   .catch(error => console.error("Error:", error))
   .finally(() => {
