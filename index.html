@@ -104,28 +104,16 @@
 
 
     <div id="advanced-search">
-      <label>
-        Type:
-        <select id="filter-type">
-          <option value="">All</option>
-          <option value="Resistors">Resistors</option>
-          <option value="Capacitors">Capacitors</option>
-          <!-- Add more types as needed -->
-        </select>
-      </label>
+      <label for="typeSelect">Type:</label>
+      <select id="typeSelect"><option value="">All</option></select>
 
-      <label>
-        Value:
-        <input type="text" id="filter-value" placeholder="e.g. 10kΩ">
-      </label>
+      <label for="valueInput">Value:</label>
+      <input type="text" id="valueInput" placeholder="e.g. 10kΩ">
 
-      <label>
-        Footprint:
-        <input type="text" id="filter-footprint" placeholder="e.g. 0603">
-      </label>
+      <label for="footprintInput">Footprint:</label>
+      <input type="text" id="footprintInput" placeholder="e.g. 0402">
 
-      <button id="apply-filters">Apply</button>
-      <button id="clear-filters">Clear</button>
+      <button id="applyFilter">Apply</button>
     </div>
   
 
