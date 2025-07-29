@@ -147,10 +147,15 @@
 
     <div id="addModal" class="modal">
       <div class="modal-content">
-        <span class="close" id="addClose">&times;</span>
+        <span class="close" onclick="closeAddModal()">&times;</span>
         <h2>Add Quantity</h2>
+
         <label for="addQty">Enter quantity to add:</label>
-        <input type="number" id="addQty" min="1" placeholder="e.g. 100">
+        <input type="number" id="addQty" min="1" placeholder="e.g. 10">
+
+        <label for="addLocationInput">Location:</label>
+        <input type="text" id="addLocationInput" placeholder="e.g. NA12">
+
         <button id="confirmAdd">Add</button>
       </div>
     </div>

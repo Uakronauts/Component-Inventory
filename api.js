@@ -263,6 +263,8 @@ document.getElementById("add-part").addEventListener("click", () => {
   // Set placeholder for quantity based on scanned data
   const scannedQty = parseInt(lastScannedPart?.QUANTITY || "");
   addQtyInput.placeholder = !isNaN(scannedQty) ? scannedQty : "e.g. 100";
+  document.getElementById("addQty").value = lastScannedPart?.QUANTITY || "";
+
   addQtyInput.value = "";
   addLocationInput.value = "";
 
