@@ -196,3 +196,10 @@ function renderPartsTable(parts) {
     tbody.appendChild(row);
   });
 }
+
+document.getElementById("clearFilter").addEventListener("click", () => {
+  document.getElementById("typeSelect").value = "";
+  document.getElementById("valueInput").value = "";
+  document.getElementById("footprintInput").value = "";
+  renderPartsTable(allParts); // Reset to full list
+});
