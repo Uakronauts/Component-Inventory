@@ -13,16 +13,8 @@ document.getElementById("submitPrMode").addEventListener("click", () => {
   submitPurchaseRequest(selectedParts);
 });
 
-function submitPurchaseRequest() {
-  const selectedPartNumbers = [];
-
-  // Find all checked checkboxes in the table
-  document.querySelectorAll(".pr-checkbox:checked").forEach(checkbox => {
-    const partId = checkbox.dataset.digikey;
-    if (partId) selectedPartNumbers.push(partId);
-  });
-
-  if (selectedPartNumbers.length === 0) {
+function submitPurchaseRequest(selectedPartNumbers) {
+  if (!Array.isArray(selectedPartNumbers) || selectedPartNumbers.length === 0) {
     alert("No parts selected.");
     return;
   }
