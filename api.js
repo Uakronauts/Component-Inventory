@@ -114,11 +114,9 @@ function startScanner() {
 
   codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
     if (result) {
-      console.log(result);
       document.getElementById("raw").innerText = result;
       document.getElementById("result").textContent = result.text;
-      const parsed = customParse(result.text);
-      document.getElementById("parsed").innerText = JSON.stringify(parsed);
+      document.getElementById("parsed").innerText = JSON.stringify(customParse(result.text));
       showCheckmark();
     }
     if (err && !(err instanceof ZXing.NotFoundException)) {
@@ -146,12 +144,14 @@ function startScanner() {
 //   document.getElementById("parsed").innerText = "";
 // }
 
+
 function stopScanner() {
   codeReader.reset();
   videoWrapper.classList.remove("active");
   document.getElementById("result").textContent = '';
   console.log("Camera stopped.");
 }
+
 
 document.getElementById("start-overlay").addEventListener("click", ()=>{
   startScanner()
