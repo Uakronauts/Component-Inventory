@@ -113,7 +113,7 @@ th {
   position: fixed;
   z-index: 10;
   left: 50%; top: 0;
-  width: 60vw; height: 60vw;
+  width: 60vw; height: auto;
   overflow: auto;
   background-color: rgba(0,0,0,0.5);
   transform: translateX(-50%);
@@ -124,10 +124,14 @@ th {
   background-color: white;
   margin: 15% auto;
   padding: 20px;
-  width: 300px;
+  width: 50vw;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0,0,0,0.2);
   text-align: center;
+}
+
+.modal-input{
+  font-size: 40px;
 }
 
 .close {
