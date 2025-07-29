@@ -24,11 +24,6 @@
       </div>
     </div>
 
-    
-
-
-
-
     <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
     <script src="https://accounts.google.com/gsi/client" async></script>
 
@@ -105,6 +100,33 @@
     <div id="db-button-container">
       <button id="browse-db"  class="action-button">Browse</button>
       <input type="text" id="searchBox" placeholder="Search..." />
+    </div>
+
+    
+    <div id="advanced-search">
+      <label>
+        Type:
+        <select id="filter-type">
+          <option value="">All</option>
+          <option value="Resistors">Resistors</option>
+          <option value="Capacitors">Capacitors</option>
+          <option value="Diodes">Diodes</option>
+          <!-- Add more types as needed -->
+        </select>
+      </label>
+
+      <label>
+        Value:
+        <input type="text" id="filter-value" placeholder="e.g. 10kΩ">
+      </label>
+
+      <label>
+        Footprint:
+        <input type="text" id="filter-footprint" placeholder="e.g. 0603">
+      </label>
+
+      <button id="apply-filters">Apply</button>
+      <button id="clear-filters">Clear</button>
     </div>
   
 
