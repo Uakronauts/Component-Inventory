@@ -271,10 +271,17 @@ document.getElementById("add-part").addEventListener("click", () => {
   addModal.style.display = "block";
 });
 
-addClose.onclick = () => addModal.style.display = "none";
-window.addEventListener("click", (e) => {
-  if (e.target === addModal) addModal.style.display = "none";
-});
+if (addClose && addModal) {
+  addClose.addEventListener("click", () => {
+    addModal.style.display = "none";
+  });
+
+  window.addEventListener("click", (e) => {
+    if (e.target === addModal) {
+      addModal.style.display = "none";
+    }
+  });
+}
 
 document.getElementById("confirmAdd").addEventListener("click", () => {
   const quantity = parseInt(addQtyInput.value || addQtyInput.placeholder);
