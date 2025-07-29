@@ -140,7 +140,7 @@ function renderPartsTable(parts) {
     digikeyTd.textContent = part.DIGIKEY_PART_NUMBER;
 
     const qtyTd = document.createElement("td");
-    qtyTd.textContent = part.QUANTITY;
+    qtyTd.innerHTML = `${part.QUANTITY} <span class="edit-icon">✎</span>`;
     qtyTd.style.cursor = "pointer";
     qtyTd.title = "Click to edit quantity";
     qtyTd.addEventListener("click", () => {

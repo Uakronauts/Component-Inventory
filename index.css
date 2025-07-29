@@ -52,14 +52,6 @@
 
 
 
-
-
-
-
-
-
-
-
 .hidden {
     display: none;
 }
@@ -204,4 +196,11 @@ button#confirmSubtract {
 
 #searchBox {
   width: 60vw;
+}
+
+.edit-icon {
+  font-size: 0.8em;
+  color: #888;
+  margin-left: 6px;
+  vertical-align: middle;
 }
