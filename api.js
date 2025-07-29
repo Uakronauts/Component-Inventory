@@ -426,6 +426,7 @@ fetch(url, {
   })
   .finally(() => {
     hideDbSpinner();
+    fetchAndDisplayParts();
   })
 };
 
