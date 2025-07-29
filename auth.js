@@ -22,6 +22,11 @@ function decodeJWT(token) {
 
     const responsePayload = decodeJWT(response.credential);
     token = response.credential;
+
+    
+    clearTimeout(signinTimeout);
+    document.getElementById("signin-container").style.display = "none";
+
     // console.log("Decoded JWT ID token fields:");
     // console.log("  Full Name: " + responsePayload.name);
     // console.log("  Given Name: " + responsePayload.given_name);
@@ -34,3 +39,11 @@ function decodeJWT(token) {
         fetchAndDisplayParts();
     }
 }
+
+
+
+let signinTimeout = setTimeout(() => {
+  if (!token) {
+    document.getElementById("signin-container").style.display = "block"; // or "manual-signin"
+  }
+}, 5000);
