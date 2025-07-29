@@ -221,7 +221,7 @@ function fakeData(){
 const url = "https://script.google.com/macros/s/AKfycbxmCclSl1FJxoZDDWAU_hVKPnQoVfNFi7hTNNCH2m9RdR9EWSDvSRnJpKdR4jcC8Nhj/exec";
 
 // document.getElementById("add-part").addEventListener("click", () => {
-//     let location = prompt("Enter part location:", "NA12");
+//     let location = prompt("Enter part location:", "N/A");
 //   if (location === null || location.trim() === "") {
 //     location = "undefined";
 //   }
