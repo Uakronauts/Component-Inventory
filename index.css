@@ -117,7 +117,7 @@ th {
   overflow: auto;
   background-color: rgba(0,0,0,0.5);
   transform: translateX(-50%);
-  font-size: 20px;
+  font-size: 30px;
 }
 
 .modal-content {
