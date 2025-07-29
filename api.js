@@ -78,47 +78,80 @@ setTimeout( () => {
 
 } ,1000);
 
+
+const videoWrapper = document.getElementById("videoWrapper");
+const overlay = document.getElementById("start-overlay");
+const video = document.getElementById("video");
+
+overlay.addEventListener("click", startScanner);
     
+// function startScanner() {
+//   const overlay = document.getElementById("start-overlay");
+//   overlay.style.display = "none"; // Hide overlay
+
+//   codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
+//     if (result) {
+//       console.log(result)
+//       document.getElementById("raw").innerText = result
+//       document.getElementById('result').textContent = result.text
+//       let parsed = customParse(result.text);
+//       console.log("PARSED")
+//       console.log(JSON.stringify(parsed));
+//       document.getElementById("parsed").innerText = JSON.stringify(parsed)
+
+//       showCheckmark()
+//     }
+//     if (err && !(err instanceof ZXing.NotFoundException)) {
+//       console.error(err)
+//       document.getElementById('result').textContent = err
+//     }
+//   })
+//   console.log(`Started continous decode from camera with id ${selectedDeviceId}`)
+// }
+
 function startScanner() {
-  const overlay = document.getElementById("start-overlay");
-  overlay.style.display = "none"; // Hide overlay
+  videoWrapper.classList.add("active");
 
   codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
     if (result) {
-      console.log(result)
-      document.getElementById("raw").innerText = result
-      document.getElementById('result').textContent = result.text
-      let parsed = customParse(result.text);
-      console.log("PARSED")
-      console.log(JSON.stringify(parsed));
-      document.getElementById("parsed").innerText = JSON.stringify(parsed)
-
-      showCheckmark()
+      console.log(result);
+      document.getElementById("raw").innerText = result;
+      document.getElementById("result").textContent = result.text;
+      const parsed = customParse(result.text);
+      document.getElementById("parsed").innerText = JSON.stringify(parsed);
+      showCheckmark();
     }
     if (err && !(err instanceof ZXing.NotFoundException)) {
-      console.error(err)
-      document.getElementById('result').textContent = err
+      console.error(err);
+      document.getElementById("result").textContent = err;
     }
-  })
-  console.log(`Started continous decode from camera with id ${selectedDeviceId}`)
+  });
+
+  console.log(`Started decode from camera: ${selectedDeviceId}`);
 }
+
+// function stopScanner() {
+//   // Stop the code reader
+//   if (codeReader) {
+//     codeReader.reset(); // Stops video stream and decoding
+//   }
+
+//   // Show the overlay again
+//   const overlay = document.getElementById("start-overlay");
+//   overlay.style.display = "flex"; // or "block" depending on your CSS layout
+
+//   // Optionally clear any previous results
+//   document.getElementById("raw").innerText = "";
+//   document.getElementById("result").textContent = "";
+//   document.getElementById("parsed").innerText = "";
+// }
 
 function stopScanner() {
-  // Stop the code reader
-  if (codeReader) {
-    codeReader.reset(); // Stops video stream and decoding
-  }
-
-  // Show the overlay again
-  const overlay = document.getElementById("start-overlay");
-  overlay.style.display = "flex"; // or "block" depending on your CSS layout
-
-  // Optionally clear any previous results
-  document.getElementById("raw").innerText = "";
-  document.getElementById("result").textContent = "";
-  document.getElementById("parsed").innerText = "";
+  codeReader.reset();
+  videoWrapper.classList.remove("active");
+  document.getElementById("result").textContent = '';
+  console.log("Camera stopped.");
 }
-
 
 document.getElementById("start-overlay").addEventListener("click", ()=>{
   startScanner()
