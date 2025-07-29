@@ -1,6 +1,6 @@
 #video{
     height: auto;
-    max-height: 30vh;
+    max-height: 50vh;
     width: 90vw;
     position: relative;
     transform: translateX(-50%);
@@ -9,6 +9,7 @@
 
 #start-overlay {
   position: absolute;
+  height: 30vh;
   top: 0;
   left: 0;
   right: 0;
