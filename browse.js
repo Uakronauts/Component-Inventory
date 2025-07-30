@@ -14,6 +14,8 @@ function fetchAndDisplayParts() {
   .then(parts => {
     allParts = parts;                    // Save full data set
     updateTypeOptions(parts);            // Update dropdown
+    updateFootprintOptions(parts);
+    updateValueOptions(parts);
     renderPartsTable(parts);             // Render all initially
   })
   .catch(error => console.error("Error:", error))
@@ -124,6 +126,20 @@ function updateTypeOptions(parts) {
   const uniqueTypes = [...new Set(parts.map(p => p.TYPE).filter(Boolean))];
   typeSelect.innerHTML = `<option value="">All</option>` + 
     uniqueTypes.map(type => `<option value="${type}">${type}</option>`).join('');
+}
+
+function updateFootprintOptions(parts) {
+  const footprintSelect = document.getElementById("footprintSelect");
+  const uniqueFootprints = [...new Set(parts.map(p => p.FOOTPRINT).filter(Boolean))];
+  footprintSelect.innerHTML = `<option value="">All</option>` +
+    uniqueFootprints.map(fp => `<option value="${fp}">${fp}</option>`).join('');
+}
+
+function updateValueOptions(parts) {
+  const valueSelect = document.getElementById("valueSelect");
+  const uniqueValues = [...new Set(parts.map(p => p.VALUE).filter(Boolean))];
+  valueSelect.innerHTML = `<option value="">All</option>` +
+    uniqueValues.map(val => `<option value="${val}">${val}</option>`).join('');
 }
 
 function renderPartsTable(parts) {
