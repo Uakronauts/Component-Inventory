@@ -204,7 +204,7 @@ function updateDependentSelect(select, parts, field) {
 
 function initializeFilters(parts) {
   allParts = parts;
-  updateAllSelects(); // Populate all selects
+  updateAllSelects(); 
 }
 
 
