@@ -244,3 +244,14 @@ document.getElementById("clearFilter").addEventListener("click", () => {
   document.getElementById("footprintInput").value = "";
   renderPartsTable(allParts); // Reset to full list
 });
+
+function fillMissing(){
+  fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify({
+      mode: "missing",
+      token: token
+    })
+  })
+}
