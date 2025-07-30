@@ -161,16 +161,6 @@ function updateDependentSelect(select, parts, field) {
     unique.map(v => `<option value="${v}">${v}</option>`).join('');
 }
 
-function applyFilters() {
-  const type = document.getElementById("typeSelect").value;
-  const value = document.getElementById("valueSelect").value;
-  const footprint = document.getElementById("footprintSelect").value;
-
-  // Apply your actual filtering logic here, e.g. re-render table
-  console.log("Filters applied:", { type, value, footprint });
-}
-
-
 function initializeFilters(parts) {
   allParts = parts; // Save global reference
   const typeSelect = document.getElementById("typeSelect");
