@@ -212,7 +212,8 @@ button#confirmAdd {
 }
 
 #searchBox {
-  width: 30vw;
+  width: 60vw;
+  font-size: 20px;
 }
 
 .edit-icon {
