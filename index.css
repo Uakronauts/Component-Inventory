@@ -222,3 +222,14 @@ button#confirmAdd {
   margin-left: 6px;
   vertical-align: middle;
 }
+
+#typeSelect{
+  font-size: 16px;
+}
+
+#valueSelect{
+  font-size:16px;
+}
+#footprintSelect{
+  font-size:16px;
+}
