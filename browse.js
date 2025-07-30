@@ -194,6 +194,10 @@ function rebuildSelect(selectEl, parts, field, currentValue) {
     }).join('');
 }
 
+document.getElementById("typeSelect").addEventListener("change", updateAllSelects);
+document.getElementById("valueSelect").addEventListener("change", updateAllSelects);
+document.getElementById("footprintSelect").addEventListener("change", updateAllSelects);
+
 function updateDependentSelect(select, parts, field) {
   const unique = [...new Set(parts.map(p => p[field]).filter(Boolean))];
   select.innerHTML = `<option value="">All</option>` +
