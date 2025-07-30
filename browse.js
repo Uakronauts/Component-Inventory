@@ -109,8 +109,8 @@ function filterTable() {
 document.getElementById("applyFilter").addEventListener("click", applyFilters);
 function applyFilters() {
   const selectedType = document.getElementById("typeSelect").value;
-  const value = document.getElementById("valueInput").value.trim().toLowerCase();
-  const footprint = document.getElementById("footprintInput").value.trim().toLowerCase();
+  const value = document.getElementById("valueSelect").value.trim().toLowerCase();
+  const footprint = document.getElementById("footprintSelect").value.trim().toLowerCase();
 
   const filtered = allParts.filter(part =>
     (!selectedType || part.TYPE === selectedType) &&
