@@ -295,8 +295,8 @@ function renderPartsTable(parts) {
 
 document.getElementById("clearFilter").addEventListener("click", () => {
   document.getElementById("typeSelect").value = "";
-  document.getElementById("valueInput").value = "";
-  document.getElementById("footprintInput").value = "";
+  document.getElementById("valueSelect").value = "";
+  document.getElementById("footprintSelect").value = "";
   renderPartsTable(allParts); // Reset to full list
 });
 
