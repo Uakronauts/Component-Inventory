@@ -29,22 +29,22 @@ document.getElementById("searchBox").addEventListener("input", () => {
 })
 
 
-function adjustQuantity(supplierPN, delta) {
+function updatePart(part) {
   showDbSpinner();
   fetch(url, {
     method: "POST",
-    headers: { "Content-Type": "text/plain" },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      mode: "adjust",
-      SUPPLIER_PART_NUMBER: supplierPN,
-      DELTA: delta,
-      token: token
+      mode: "update",
+      token: token,
+      ...part  // spreads part fields like SUPPLIER_PART_NUMBER, QUANTITY, etc.
     })
-  }).then(() => fetchAndDisplayParts())
-  .catch(error => console.error("Error:", error))
-  .finally(() => {
-    hideDbSpinner();
-  });
+  })
+    .then(() => fetchAndDisplayParts())
+    .catch(error => console.error("Error updating part:", error))
+    .finally(() => {
+      hideDbSpinner();
+    });
 }
 
 function setQuantity(supplierPartNumber, newQuantity) {
@@ -184,17 +184,44 @@ function renderPartsTable(parts) {
 
     const actionsTd = document.createElement("td");
 
-    const plusBtn = document.createElement("button");
-    plusBtn.textContent = "+";
-    plusBtn.addEventListener("click", () => adjustQuantity(part.SUPPLIER_PART_NUMBER, 1));
-
-    const minusBtn = document.createElement("button");
-    minusBtn.textContent = "-";
-    minusBtn.addEventListener("click", () => adjustQuantity(part.SUPPLIER_PART_NUMBER, -1));
-
     const editBtn = document.createElement("button");
     editBtn.textContent = "✎";
-    editBtn.addEventListener("click", () => changeLocation(part.SUPPLIER_PART_NUMBER));
+    editBtn.addEventListener("click", () => {
+      if (editBtn.textContent === "✎") {
+        // Enter edit mode
+        editBtn.textContent = "💾";
+
+        // Replace editable cells with input elements
+        [digikeyTd, qtyTd, locationTd, typeTd, valueTd, footprintTd].forEach(td => {
+          const val = td.textContent.replace(/ ✎$/, ""); // remove icon if needed
+          td.dataset.oldValue = val;
+          td.innerHTML = `<input type="text" value="${val}" style="width: 100%;">`;
+        });
+
+      } else {
+        // Save edits
+        editBtn.textContent = "✎";
+
+        const updated = {
+          SUPPLIER_PART_NUMBER: part.SUPPLIER_PART_NUMBER,
+          DIGIKEY_PART_NUMBER: digikeyTd.querySelector("input").value.trim(),
+          QUANTITY: parseInt(qtyTd.querySelector("input").value.trim()),
+          LOCATION: locationTd.querySelector("input").value.trim(),
+          TYPE: typeTd.querySelector("input").value.trim(),
+          VALUE: valueTd.querySelector("input").value.trim(),
+          FOOTPRINT: footprintTd.querySelector("input").value.trim()
+        };
+
+        digikeyTd.textContent = updated.DIGIKEY_PART_NUMBER;
+        qtyTd.innerHTML = `${updated.QUANTITY} <span class="edit-icon">✎</span>`;
+        locationTd.textContent = updated.LOCATION;
+        typeTd.textContent = updated.TYPE;
+        valueTd.textContent = updated.VALUE;
+        footprintTd.textContent = updated.FOOTPRINT;
+
+        updatePart(updated);
+      }
+    });
 
     actionsTd.appendChild(plusBtn);
     actionsTd.appendChild(minusBtn);
