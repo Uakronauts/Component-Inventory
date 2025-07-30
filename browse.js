@@ -109,42 +109,16 @@ function filterTable() {
 
 document.getElementById("applyFilter").addEventListener("click", applyFilters);
 function applyFilters() {
-  const selectedType = document.getElementById("typeSelect").value;
+  const type = document.getElementById("typeSelect").value.trim().toLowerCase();;
   const value = document.getElementById("valueSelect").value.trim().toLowerCase();
   const footprint = document.getElementById("footprintSelect").value.trim().toLowerCase();
 
-  const filtered = allParts.filter(part =>
-    (!selectedType || part.TYPE === selectedType) &&
-    (!value || (part.VALUE && part.VALUE.toLowerCase().includes(value))) &&
-    (!footprint || (part.FOOTPRINT && part.FOOTPRINT.toLowerCase().includes(footprint)))
-  );
+  if (type) filtered = filtered.filter(p => p.TYPE === type);
+  if (value) filtered = filtered.filter(p => p.VALUE === value);
+  if (footprint) filtered = filtered.filter(p => p.FOOTPRINT === footprint);
 
   renderPartsTable(filtered);
 }
-
-// function updateTypeOptions(parts) {
-//   const typeSelect = document.getElementById("typeSelect");
-//   const uniqueTypes = [...new Set(parts.map(p => p.TYPE).filter(Boolean))];
-//   typeSelect.innerHTML = `<option value="">All</option>` + 
-//     uniqueTypes.map(type => `<option value="${type}">${type}</option>`).join('');
-// }
-
-// function updateFootprintOptions(parts) {
-//   const footprintSelect = document.getElementById("footprintSelect");
-//   const uniqueFootprints = [...new Set(parts.map(p => p.FOOTPRINT).filter(Boolean))];
-//   footprintSelect.innerHTML = `<option value="">All</option>` +
-//     uniqueFootprints.map(fp => `<option value="${fp}">${fp}</option>`).join('');
-// }
-
-// function updateValueOptions(parts) {
-//   const valueSelect = document.getElementById("valueSelect");
-//   const uniqueValues = [...new Set(parts.map(p => p.VALUE).filter(Boolean))];
-//   valueSelect.innerHTML = `<option value="">All</option>` +
-//     uniqueValues.map(val => `<option value="${val}">${val}</option>`).join('');
-// }
-
-
-
 
 function updateSelectOptions(parts) {
   const typeSelect = document.getElementById("typeSelect");
@@ -190,6 +164,35 @@ function applyFilters() {
 
   // Apply your actual filtering logic here, e.g. re-render table
   console.log("Filters applied:", { type, value, footprint });
+}
+
+
+function initializeFilters(parts) {
+  allParts = parts; // Save global reference
+  const typeSelect = document.getElementById("typeSelect");
+  const valueSelect = document.getElementById("valueSelect");
+  const footprintSelect = document.getElementById("footprintSelect");
+
+  // Populate TYPE
+  const uniqueTypes = [...new Set(parts.map(p => p.TYPE).filter(Boolean))];
+  typeSelect.innerHTML = `<option value="">All</option>` +
+    uniqueTypes.map(type => `<option value="${type}">${type}</option>`).join('');
+
+  typeSelect.onchange = () => {
+    const selectedType = typeSelect.value;
+    const filtered = selectedType ? allParts.filter(p => p.TYPE === selectedType) : allParts;
+
+    updateDependentSelect(valueSelect, filtered, "VALUE");
+    updateDependentSelect(footprintSelect, filtered, "FOOTPRINT");
+
+    valueSelect.disabled = !selectedType;
+    footprintSelect.disabled = !selectedType;
+
+    applyFilters();
+  };
+
+  valueSelect.onchange = applyFilters;
+  footprintSelect.onchange = applyFilters;
 }
 
 
