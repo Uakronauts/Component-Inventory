@@ -114,11 +114,11 @@ function applyFilters() {
   const value = document.getElementById("valueSelect").value.trim().toLowerCase();
   const footprint = document.getElementById("footprintSelect").value.trim().toLowerCase();
 
-  let filtered = parts.filter(p => {
-    const matchType = !type || (p.TYPE && p.TYPE.toLowerCase() === type);
-    const matchValue = !value || (p.VALUE && p.VALUE.toLowerCase() === value);
-    const matchFootprint = !footprint || (p.FOOTPRINT && p.FOOTPRINT.toLowerCase() === footprint);
-    return matchType && matchValue && matchFootprint;
+  const filtered = allParts.filter(p => {
+    const matchesType = !type || (p.TYPE && p.TYPE.toLowerCase() === type);
+    const matchesValue = !value || (p.VALUE && p.VALUE.toLowerCase() === value);
+    const matchesFootprint = !footprint || (p.FOOTPRINT && p.FOOTPRINT.toLowerCase() === footprint);
+    return matchesType && matchesValue && matchesFootprint;
   });
 
   renderPartsTable(filtered);
