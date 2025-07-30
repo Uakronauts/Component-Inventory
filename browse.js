@@ -16,6 +16,7 @@ function fetchAndDisplayParts() {
     // updateTypeOptions(parts);            // Update dropdown
     // updateFootprintOptions(parts);
     // updateValueOptions(parts);
+    initializeFilters(parts)
     updateSelectOptions(parts);
     renderPartsTable(parts);             // Render all initially
   })
