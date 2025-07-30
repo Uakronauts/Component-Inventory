@@ -223,8 +223,6 @@ function renderPartsTable(parts) {
       }
     });
 
-    actionsTd.appendChild(plusBtn);
-    actionsTd.appendChild(minusBtn);
     actionsTd.appendChild(editBtn);
 
     row.appendChild(supplierTd);
