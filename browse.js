@@ -330,3 +330,18 @@ function fillMissing(){
     console.log("Fill missing results:", data);
   })
 }
+
+function updatePricing(){
+  fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify({
+      mode: "pricing",
+      token: token
+    })
+  })
+  .then(response => response.text())
+  .then(data => {
+    console.log("Fill pricing results:", data);
+  })
+}
