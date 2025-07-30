@@ -254,4 +254,8 @@ function fillMissing(){
       token: token
     })
   })
+  .then(response => response.text())
+  .then(data => {
+    console.log("Fill missing results:", data);
+  })
 }
