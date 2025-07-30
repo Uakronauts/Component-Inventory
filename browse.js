@@ -110,13 +110,16 @@ function filterTable() {
 
 document.getElementById("applyFilter").addEventListener("click", applyFilters);
 function applyFilters() {
-  const type = document.getElementById("typeSelect").value.trim().toLowerCase();;
+  const type = document.getElementById("typeSelect").value.trim().toLowerCase();
   const value = document.getElementById("valueSelect").value.trim().toLowerCase();
   const footprint = document.getElementById("footprintSelect").value.trim().toLowerCase();
 
-  if (type) filtered = filtered.filter(p => p.TYPE === type);
-  if (value) filtered = filtered.filter(p => p.VALUE === value);
-  if (footprint) filtered = filtered.filter(p => p.FOOTPRINT === footprint);
+  let filtered = parts.filter(p => {
+    const matchType = !type || (p.TYPE && p.TYPE.toLowerCase() === type);
+    const matchValue = !value || (p.VALUE && p.VALUE.toLowerCase() === value);
+    const matchFootprint = !footprint || (p.FOOTPRINT && p.FOOTPRINT.toLowerCase() === footprint);
+    return matchType && matchValue && matchFootprint;
+  });
 
   renderPartsTable(filtered);
 }
