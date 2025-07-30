@@ -140,19 +140,7 @@ function renderPartsTable(parts) {
     digikeyTd.textContent = part.DIGIKEY_PART_NUMBER;
 
     const qtyTd = document.createElement("td");
-    qtyTd.innerHTML = `${part.QUANTITY} <span class="edit-icon">✎</span>`;
-    qtyTd.style.cursor = "pointer";
-    qtyTd.title = "Click to edit quantity";
-    qtyTd.addEventListener("click", () => {
-      const newQty = prompt(`Set new quantity for ${part.SUPPLIER_PART_NUMBER}:`, part.QUANTITY);
-      if (newQty === null) return;
-      const intQty = parseInt(newQty);
-      if (!isNaN(intQty)) {
-        setQuantity(part.SUPPLIER_PART_NUMBER, intQty);
-      } else {
-        alert("Invalid quantity");
-      }
-    });
+    qtyTd.innerHTML = `${part.QUANTITY}`;
 
     if (prMode) {
       const checkboxTd = document.createElement("td");
