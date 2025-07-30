@@ -106,7 +106,7 @@ function filterTable() {
   });
 }
 
-document.getElementById("applyFilter").addEventListener("click", applyFilters);
+// document.getElementById("applyFilter").addEventListener("click", applyFilters);
 function applyFilters() {
   const type = document.getElementById("typeSelect").value.trim().toLowerCase();
   const value = document.getElementById("valueSelect").value.trim().toLowerCase();
@@ -312,7 +312,8 @@ document.getElementById("clearFilter").addEventListener("click", () => {
   document.getElementById("typeSelect").value = "";
   document.getElementById("valueSelect").value = "";
   document.getElementById("footprintSelect").value = "";
-  renderPartsTable(allParts); // Reset to full list
+
+  updateAllSelects(); // This re-applies filter logic and disables selects
 });
 
 function fillMissing(){
