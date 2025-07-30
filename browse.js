@@ -15,7 +15,6 @@ function fetchAndDisplayParts() {
 
 
     allParts = parts;                    // Save full data set
-    parts.NORMALIZED_VALUE = normalizeValue(parts.VALUE);
     initializeFilters(parts)
     renderPartsTable(parts);             // Render all initially
   })
@@ -123,26 +122,60 @@ function applyFilters() {
   renderPartsTable(filtered);
 }
 
+// function updateSelectOptions(parts) {
+//   const typeSelect = document.getElementById("typeSelect");
+//   const valueSelect = document.getElementById("valueSelect");
+//   const footprintSelect = document.getElementById("footprintSelect");
+
+//   // Populate TYPE select
+//   const uniqueTypes = [...new Set(parts.map(p => p.TYPE).filter(Boolean))];
+//   typeSelect.innerHTML = `<option value="">All</option>` +
+//     uniqueTypes.map(type => `<option value="${type}">${type}</option>`).join('');
+
+//   // When TYPE changes
+//   typeSelect.onchange = () => {
+//     const selectedType = typeSelect.value;
+//     const filteredParts = selectedType ? parts.filter(p => p.TYPE === selectedType) : parts;
+
+//     // Update VALUE and FOOTPRINT selects based on selected TYPE
+//     updateDependentSelect(valueSelect, filteredParts, "VALUE");
+//     updateDependentSelect(footprintSelect, filteredParts, "FOOTPRINT");
+
+//     // Enable or disable selects
+//     valueSelect.disabled = !selectedType;
+//     footprintSelect.disabled = !selectedType;
+
+//     applyFilters();
+//   };
+
+//   // When VALUE or FOOTPRINT changes
+//   valueSelect.onchange = applyFilters;
+//   footprintSelect.onchange = applyFilters;
+// }
+
 function updateAllSelects() {
   const typeSelect = document.getElementById("typeSelect");
   const valueSelect = document.getElementById("valueSelect");
   const footprintSelect = document.getElementById("footprintSelect");
 
   const selectedType = typeSelect.value.trim().toLowerCase();
-  const selectedValue = normalizeValue(valueSelect.value.trim());
+  const selectedValue = valueSelect.value.trim().toLowerCase();
   const selectedFootprint = footprintSelect.value.trim().toLowerCase();
 
+  // Filter list based on current selections
   const filtered = allParts.filter(p => {
     const matchType = !selectedType || (typeof p.TYPE === "string" && p.TYPE.toLowerCase() === selectedType);
-    const matchValue = !selectedValue || (p.NORMALIZED_VALUE && p.NORMALIZED_VALUE === selectedValue);
+    const matchValue = !selectedValue || (typeof p.VALUE === "string" && p.VALUE.toLowerCase() === selectedValue);
     const matchFootprint = !selectedFootprint || (typeof p.FOOTPRINT === "string" && p.FOOTPRINT.toLowerCase() === selectedFootprint);
     return matchType && matchValue && matchFootprint;
   });
 
+  // Rebuild each select based on filtered parts
   rebuildSelect(typeSelect, filtered, "TYPE", selectedType);
-  rebuildSelect(valueSelect, filtered, "VALUE", valueSelect.value.trim());
+  rebuildSelect(valueSelect, filtered, "VALUE", selectedValue);
   rebuildSelect(footprintSelect, filtered, "FOOTPRINT", selectedFootprint);
 
+  // Enable/disable based on type
   valueSelect.disabled = !selectedType;
   footprintSelect.disabled = !selectedType;
 
@@ -150,22 +183,12 @@ function updateAllSelects() {
 }
 
 
-function rebuildSelect(selectEl, parts, field, selectedRaw) {
-  const isValueField = (field === "VALUE");
-  const map = new Map();
-
-  parts.forEach(p => {
-    const raw = p[field];
-    const norm = isValueField ? normalizeValue(raw) : raw;
-    if (typeof raw === "string" && !map.has(norm)) {
-      map.set(norm, raw); // dedupe by normalized, keep original display
-    }
-  });
-
+function rebuildSelect(selectEl, parts, field, currentValue) {
+  const options = [...new Set(parts.map(p => p[field]).filter(v => typeof v === "string"))].sort();
   selectEl.innerHTML = `<option value="">All</option>` +
-    [...map.entries()].map(([norm, raw]) => {
-      const selected = raw.toLowerCase() === selectedRaw.toLowerCase() ? "selected" : "";
-      return `<option value="${raw}" ${selected}>${raw}</option>`;
+    options.map(v => {
+      const selected = v.toLowerCase() === currentValue ? "selected" : "";
+      return `<option value="${v}" ${selected}>${v}</option>`;
     }).join('');
 }
 
@@ -306,30 +329,4 @@ function fillMissing(){
   .then(data => {
     console.log("Fill missing results:", data);
   })
-}
-
-function normalizeValue(value) {
-  if (typeof value !== "string") return "";
-
-  let v = value.toUpperCase().replace(/\s/g, "").replace(/Ω/g, ""); // Remove Ω symbol
-
-  // Normalize resistor values to ohms
-  if (/[KM]/.test(v)) {
-    v = v.replace(/([KM])/, match => {
-      return match === "K" ? "000" : "000000";
-    });
-  }
-
-  // Convert to number if possible
-  const numeric = parseFloat(v);
-  if (!isNaN(numeric)) return numeric.toString();
-
-  // Capacitor normalization (all to nF)
-  if (/F$/.test(v)) {
-    if (v.endsWith("UF")) return (parseFloat(v) * 1000).toString();      // µF → nF
-    if (v.endsWith("NF")) return parseFloat(v).toString();              // nF
-    if (v.endsWith("PF")) return (parseFloat(v) / 1000).toString();     // pF → nF
-  }
-
-  return v;
 }
