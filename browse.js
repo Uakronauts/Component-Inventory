@@ -13,9 +13,10 @@ function fetchAndDisplayParts() {
   .then(res => res.json())
   .then(parts => {
     allParts = parts;                    // Save full data set
-    updateTypeOptions(parts);            // Update dropdown
-    updateFootprintOptions(parts);
-    updateValueOptions(parts);
+    // updateTypeOptions(parts);            // Update dropdown
+    // updateFootprintOptions(parts);
+    // updateValueOptions(parts);
+    updateSelectOptions(parts);
     renderPartsTable(parts);             // Render all initially
   })
   .catch(error => console.error("Error:", error))
@@ -121,26 +122,76 @@ function applyFilters() {
   renderPartsTable(filtered);
 }
 
-function updateTypeOptions(parts) {
+// function updateTypeOptions(parts) {
+//   const typeSelect = document.getElementById("typeSelect");
+//   const uniqueTypes = [...new Set(parts.map(p => p.TYPE).filter(Boolean))];
+//   typeSelect.innerHTML = `<option value="">All</option>` + 
+//     uniqueTypes.map(type => `<option value="${type}">${type}</option>`).join('');
+// }
+
+// function updateFootprintOptions(parts) {
+//   const footprintSelect = document.getElementById("footprintSelect");
+//   const uniqueFootprints = [...new Set(parts.map(p => p.FOOTPRINT).filter(Boolean))];
+//   footprintSelect.innerHTML = `<option value="">All</option>` +
+//     uniqueFootprints.map(fp => `<option value="${fp}">${fp}</option>`).join('');
+// }
+
+// function updateValueOptions(parts) {
+//   const valueSelect = document.getElementById("valueSelect");
+//   const uniqueValues = [...new Set(parts.map(p => p.VALUE).filter(Boolean))];
+//   valueSelect.innerHTML = `<option value="">All</option>` +
+//     uniqueValues.map(val => `<option value="${val}">${val}</option>`).join('');
+// }
+
+
+
+
+function updateSelectOptions(parts) {
   const typeSelect = document.getElementById("typeSelect");
-  const uniqueTypes = [...new Set(parts.map(p => p.TYPE).filter(Boolean))];
-  typeSelect.innerHTML = `<option value="">All</option>` + 
-    uniqueTypes.map(type => `<option value="${type}">${type}</option>`).join('');
-}
-
-function updateFootprintOptions(parts) {
-  const footprintSelect = document.getElementById("footprintSelect");
-  const uniqueFootprints = [...new Set(parts.map(p => p.FOOTPRINT).filter(Boolean))];
-  footprintSelect.innerHTML = `<option value="">All</option>` +
-    uniqueFootprints.map(fp => `<option value="${fp}">${fp}</option>`).join('');
-}
-
-function updateValueOptions(parts) {
   const valueSelect = document.getElementById("valueSelect");
-  const uniqueValues = [...new Set(parts.map(p => p.VALUE).filter(Boolean))];
-  valueSelect.innerHTML = `<option value="">All</option>` +
-    uniqueValues.map(val => `<option value="${val}">${val}</option>`).join('');
+  const footprintSelect = document.getElementById("footprintSelect");
+
+  // Populate TYPE select
+  const uniqueTypes = [...new Set(parts.map(p => p.TYPE).filter(Boolean))];
+  typeSelect.innerHTML = `<option value="">All</option>` +
+    uniqueTypes.map(type => `<option value="${type}">${type}</option>`).join('');
+
+  // When TYPE changes
+  typeSelect.onchange = () => {
+    const selectedType = typeSelect.value;
+    const filteredParts = selectedType ? parts.filter(p => p.TYPE === selectedType) : parts;
+
+    // Update VALUE and FOOTPRINT selects based on selected TYPE
+    updateDependentSelect(valueSelect, filteredParts, "VALUE");
+    updateDependentSelect(footprintSelect, filteredParts, "FOOTPRINT");
+
+    // Enable or disable selects
+    valueSelect.disabled = !selectedType;
+    footprintSelect.disabled = !selectedType;
+
+    applyFilters();
+  };
+
+  // When VALUE or FOOTPRINT changes
+  valueSelect.onchange = applyFilters;
+  footprintSelect.onchange = applyFilters;
 }
+
+function updateDependentSelect(select, parts, field) {
+  const unique = [...new Set(parts.map(p => p[field]).filter(Boolean))];
+  select.innerHTML = `<option value="">All</option>` +
+    unique.map(v => `<option value="${v}">${v}</option>`).join('');
+}
+
+function applyFilters() {
+  const type = document.getElementById("typeSelect").value;
+  const value = document.getElementById("valueSelect").value;
+  const footprint = document.getElementById("footprintSelect").value;
+
+  // Apply your actual filtering logic here, e.g. re-render table
+  console.log("Filters applied:", { type, value, footprint });
+}
+
 
 function renderPartsTable(parts) {
   const tbody = document.querySelector("#partsTable tbody");
