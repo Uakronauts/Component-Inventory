@@ -33,7 +33,7 @@ function updatePart(part) {
   showDbSpinner();
   fetch(url, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "text/plain" },
     body: JSON.stringify({
       mode: "update",
       token: token,
