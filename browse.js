@@ -12,12 +12,10 @@ function fetchAndDisplayParts() {
   })
   .then(res => res.json())
   .then(parts => {
+
+
     allParts = parts;                    // Save full data set
-    // updateTypeOptions(parts);            // Update dropdown
-    // updateFootprintOptions(parts);
-    // updateValueOptions(parts);
     initializeFilters(parts)
-    updateSelectOptions(parts);
     renderPartsTable(parts);             // Render all initially
   })
   .catch(error => console.error("Error:", error))
