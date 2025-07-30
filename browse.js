@@ -115,44 +115,83 @@ function applyFilters() {
   const footprint = document.getElementById("footprintSelect").value.trim().toLowerCase();
 
   const filtered = allParts.filter(p => {
-    const matchesType = !type || (p.TYPE && p.TYPE.toLowerCase() === type);
-    const matchesValue = !value || (p.VALUE && p.VALUE.toLowerCase() === value);
-    const matchesFootprint = !footprint || (p.FOOTPRINT && p.FOOTPRINT.toLowerCase() === footprint);
+    const matchesType = !type || (typeof p.TYPE === "string" && p.TYPE.toLowerCase() === type);
+    const matchesValue = !value || (typeof p.VALUE === "string" && p.VALUE.toLowerCase() === value);
+    const matchesFootprint = !footprint || (typeof p.FOOTPRINT === "string" && p.FOOTPRINT.toLowerCase() === footprint);
     return matchesType && matchesValue && matchesFootprint;
   });
 
   renderPartsTable(filtered);
 }
 
-function updateSelectOptions(parts) {
+// function updateSelectOptions(parts) {
+//   const typeSelect = document.getElementById("typeSelect");
+//   const valueSelect = document.getElementById("valueSelect");
+//   const footprintSelect = document.getElementById("footprintSelect");
+
+//   // Populate TYPE select
+//   const uniqueTypes = [...new Set(parts.map(p => p.TYPE).filter(Boolean))];
+//   typeSelect.innerHTML = `<option value="">All</option>` +
+//     uniqueTypes.map(type => `<option value="${type}">${type}</option>`).join('');
+
+//   // When TYPE changes
+//   typeSelect.onchange = () => {
+//     const selectedType = typeSelect.value;
+//     const filteredParts = selectedType ? parts.filter(p => p.TYPE === selectedType) : parts;
+
+//     // Update VALUE and FOOTPRINT selects based on selected TYPE
+//     updateDependentSelect(valueSelect, filteredParts, "VALUE");
+//     updateDependentSelect(footprintSelect, filteredParts, "FOOTPRINT");
+
+//     // Enable or disable selects
+//     valueSelect.disabled = !selectedType;
+//     footprintSelect.disabled = !selectedType;
+
+//     applyFilters();
+//   };
+
+//   // When VALUE or FOOTPRINT changes
+//   valueSelect.onchange = applyFilters;
+//   footprintSelect.onchange = applyFilters;
+// }
+
+function updateAllSelects() {
   const typeSelect = document.getElementById("typeSelect");
   const valueSelect = document.getElementById("valueSelect");
   const footprintSelect = document.getElementById("footprintSelect");
 
-  // Populate TYPE select
-  const uniqueTypes = [...new Set(parts.map(p => p.TYPE).filter(Boolean))];
-  typeSelect.innerHTML = `<option value="">All</option>` +
-    uniqueTypes.map(type => `<option value="${type}">${type}</option>`).join('');
+  const selectedType = typeSelect.value.trim().toLowerCase();
+  const selectedValue = valueSelect.value.trim().toLowerCase();
+  const selectedFootprint = footprintSelect.value.trim().toLowerCase();
 
-  // When TYPE changes
-  typeSelect.onchange = () => {
-    const selectedType = typeSelect.value;
-    const filteredParts = selectedType ? parts.filter(p => p.TYPE === selectedType) : parts;
+  // Filter list based on current selections
+  const filtered = allParts.filter(p => {
+    const matchType = !selectedType || (typeof p.TYPE === "string" && p.TYPE.toLowerCase() === selectedType);
+    const matchValue = !selectedValue || (typeof p.VALUE === "string" && p.VALUE.toLowerCase() === selectedValue);
+    const matchFootprint = !selectedFootprint || (typeof p.FOOTPRINT === "string" && p.FOOTPRINT.toLowerCase() === selectedFootprint);
+    return matchType && matchValue && matchFootprint;
+  });
 
-    // Update VALUE and FOOTPRINT selects based on selected TYPE
-    updateDependentSelect(valueSelect, filteredParts, "VALUE");
-    updateDependentSelect(footprintSelect, filteredParts, "FOOTPRINT");
+  // Rebuild each select based on filtered parts
+  rebuildSelect(typeSelect, filtered, "TYPE", selectedType);
+  rebuildSelect(valueSelect, filtered, "VALUE", selectedValue);
+  rebuildSelect(footprintSelect, filtered, "FOOTPRINT", selectedFootprint);
 
-    // Enable or disable selects
-    valueSelect.disabled = !selectedType;
-    footprintSelect.disabled = !selectedType;
+  // Enable/disable based on type
+  valueSelect.disabled = !selectedType;
+  footprintSelect.disabled = !selectedType;
 
-    applyFilters();
-  };
+  renderPartsTable(filtered);
+}
 
-  // When VALUE or FOOTPRINT changes
-  valueSelect.onchange = applyFilters;
-  footprintSelect.onchange = applyFilters;
+
+function rebuildSelect(selectEl, parts, field, currentValue) {
+  const options = [...new Set(parts.map(p => p[field]).filter(v => typeof v === "string"))].sort();
+  selectEl.innerHTML = `<option value="">All</option>` +
+    options.map(v => {
+      const selected = v.toLowerCase() === currentValue ? "selected" : "";
+      return `<option value="${v}" ${selected}>${v}</option>`;
+    }).join('');
 }
 
 function updateDependentSelect(select, parts, field) {
@@ -162,31 +201,8 @@ function updateDependentSelect(select, parts, field) {
 }
 
 function initializeFilters(parts) {
-  allParts = parts; // Save global reference
-  const typeSelect = document.getElementById("typeSelect");
-  const valueSelect = document.getElementById("valueSelect");
-  const footprintSelect = document.getElementById("footprintSelect");
-
-  // Populate TYPE
-  const uniqueTypes = [...new Set(parts.map(p => p.TYPE).filter(Boolean))];
-  typeSelect.innerHTML = `<option value="">All</option>` +
-    uniqueTypes.map(type => `<option value="${type}">${type}</option>`).join('');
-
-  typeSelect.onchange = () => {
-    const selectedType = typeSelect.value;
-    const filtered = selectedType ? allParts.filter(p => p.TYPE === selectedType) : allParts;
-
-    updateDependentSelect(valueSelect, filtered, "VALUE");
-    updateDependentSelect(footprintSelect, filtered, "FOOTPRINT");
-
-    valueSelect.disabled = !selectedType;
-    footprintSelect.disabled = !selectedType;
-
-    applyFilters();
-  };
-
-  valueSelect.onchange = applyFilters;
-  footprintSelect.onchange = applyFilters;
+  allParts = parts;
+  updateAllSelects(); // Populate all selects
 }
 
 
