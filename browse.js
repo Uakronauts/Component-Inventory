@@ -208,105 +208,161 @@ function initializeFilters(parts) {
 }
 
 
-function renderPartsTable(parts) {
-  const tbody = document.querySelector("#partsTable tbody");
-  tbody.innerHTML = "";
+// function renderPartsTable(parts) {
+//   const tbody = document.querySelector("#partsTable tbody");
+//   tbody.innerHTML = "";
 
-  parts.forEach(part => {
+//   parts.forEach(part => {
+//     const row = document.createElement("tr");
+
+//     const supplierTd = document.createElement("td");
+//     supplierTd.textContent = part.SUPPLIER_PART_NUMBER;
+
+//     const digikeyTd = document.createElement("td");
+//     digikeyTd.textContent = part.DIGIKEY_PART_NUMBER;
+
+//     const qtyTd = document.createElement("td");
+//     qtyTd.innerHTML = `${part.QUANTITY}`;
+
+//     if (prMode) {
+//       const checkboxTd = document.createElement("td");
+//       const checkbox = document.createElement("input");
+//       checkbox.type = "checkbox";
+//       checkbox.className = "pr-checkbox";
+//       checkbox.dataset.partnum = part.DIGIKEY_PART_NUMBER;
+//       checkboxTd.appendChild(checkbox);
+//       row.appendChild(checkboxTd);
+//     }
+
+//     if (prMode) {
+//       const th = document.createElement("th");
+//       th.textContent = "Select";
+//       document.querySelector("#partsTable thead tr").prepend(th);
+//     }
+
+//     const locationTd = document.createElement("td");
+//     locationTd.textContent = part.LOCATION;
+
+//     const typeTd = document.createElement("td");
+//     typeTd.textContent = part.TYPE;
+
+//     const valueTd = document.createElement("td");
+//     valueTd.textContent = part.VALUE;
+
+//     const footprintTd = document.createElement("td");
+//     footprintTd.textContent = part.FOOTPRINT;
+
+//     const actionsTd = document.createElement("td");
+
+//     const editBtn = document.createElement("button");
+//     editBtn.textContent = "✎";
+//     editBtn.addEventListener("click", () => {
+//       if (editBtn.textContent === "✎") {
+//         // Enter edit mode
+//         editBtn.textContent = "💾";
+
+//         // Replace editable cells with input elements
+//         [digikeyTd, qtyTd, locationTd, typeTd, valueTd, footprintTd].forEach(td => {
+//           const val = td.textContent.replace(/ ✎$/, ""); // remove icon if needed
+//           td.dataset.oldValue = val;
+//           td.innerHTML = `<input type="text" value="${val}" style="width: 100%;">`;
+//         });
+
+//       } else {
+//         // Save edits
+//         editBtn.textContent = "✎";
+
+//         const updated = {
+//           SUPPLIER_PART_NUMBER: part.SUPPLIER_PART_NUMBER,
+//           DIGIKEY_PART_NUMBER: digikeyTd.querySelector("input").value.trim(),
+//           QUANTITY: parseInt(qtyTd.querySelector("input").value.trim()),
+//           LOCATION: locationTd.querySelector("input").value.trim(),
+//           TYPE: typeTd.querySelector("input").value.trim(),
+//           VALUE: valueTd.querySelector("input").value.trim(),
+//           FOOTPRINT: footprintTd.querySelector("input").value.trim()
+//         };
+
+//         digikeyTd.textContent = updated.DIGIKEY_PART_NUMBER;
+//         qtyTd.innerHTML = `${updated.QUANTITY} <span class="edit-icon">✎</span>`;
+//         locationTd.textContent = updated.LOCATION;
+//         typeTd.textContent = updated.TYPE;
+//         valueTd.textContent = updated.VALUE;
+//         footprintTd.textContent = updated.FOOTPRINT;
+
+//         updatePart(updated);
+//       }
+//     });
+
+//     actionsTd.appendChild(editBtn);
+
+//     row.appendChild(supplierTd);
+//     row.appendChild(digikeyTd);
+//     row.appendChild(qtyTd);
+//     row.appendChild(locationTd);
+//     row.appendChild(typeTd);
+//     row.appendChild(valueTd);
+//     row.appendChild(footprintTd);
+//     row.appendChild(actionsTd);
+
+//     tbody.appendChild(row);
+//   });
+// }
+
+function renderPartsTable(parts) {
+  const table = document.getElementById("partsTable");
+  table.innerHTML = ""; // clear existing content
+
+  // Create thead
+  const thead = document.createElement("thead");
+  const headerRow = document.createElement("tr");
+
+  if (prMode) {
+    const selectHeader = document.createElement("th");
+    selectHeader.textContent = "Select";
+    headerRow.appendChild(selectHeader);
+  }
+
+  const columns = ["TYPE", "VALUE", "FOOTPRINT", "DESCRIPTION", "DIGIKEY"]; // adjust as needed
+  for (const col of columns) {
+    const th = document.createElement("th");
+    th.textContent = col;
+    headerRow.appendChild(th);
+  }
+
+  thead.appendChild(headerRow);
+  table.appendChild(thead);
+
+  // Create tbody
+  const tbody = document.createElement("tbody");
+
+  for (const part of parts) {
     const row = document.createElement("tr");
 
-    const supplierTd = document.createElement("td");
-    supplierTd.textContent = part.SUPPLIER_PART_NUMBER;
-
-    const digikeyTd = document.createElement("td");
-    digikeyTd.textContent = part.DIGIKEY_PART_NUMBER;
-
-    const qtyTd = document.createElement("td");
-    qtyTd.innerHTML = `${part.QUANTITY}`;
-
     if (prMode) {
-      const checkboxTd = document.createElement("td");
+      const prCell = document.createElement("td");
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.className = "pr-checkbox";
-      checkbox.dataset.partnum = part.DIGIKEY_PART_NUMBER;
-      checkboxTd.appendChild(checkbox);
-      row.appendChild(checkboxTd);
+      checkbox.dataset.partnum = part.DIGIKEY; // or whichever field holds the part number
+      prCell.appendChild(checkbox);
+      row.appendChild(prCell);
     }
 
-    if (prMode) {
-      const th = document.createElement("th");
-      th.textContent = "Select";
-      document.querySelector("#partsTable thead tr").prepend(th);
+    for (const col of columns) {
+      const td = document.createElement("td");
+      td.textContent = part[col] || "";
+      row.appendChild(td);
     }
-
-    const locationTd = document.createElement("td");
-    locationTd.textContent = part.LOCATION;
-
-    const typeTd = document.createElement("td");
-    typeTd.textContent = part.TYPE;
-
-    const valueTd = document.createElement("td");
-    valueTd.textContent = part.VALUE;
-
-    const footprintTd = document.createElement("td");
-    footprintTd.textContent = part.FOOTPRINT;
-
-    const actionsTd = document.createElement("td");
-
-    const editBtn = document.createElement("button");
-    editBtn.textContent = "✎";
-    editBtn.addEventListener("click", () => {
-      if (editBtn.textContent === "✎") {
-        // Enter edit mode
-        editBtn.textContent = "💾";
-
-        // Replace editable cells with input elements
-        [digikeyTd, qtyTd, locationTd, typeTd, valueTd, footprintTd].forEach(td => {
-          const val = td.textContent.replace(/ ✎$/, ""); // remove icon if needed
-          td.dataset.oldValue = val;
-          td.innerHTML = `<input type="text" value="${val}" style="width: 100%;">`;
-        });
-
-      } else {
-        // Save edits
-        editBtn.textContent = "✎";
-
-        const updated = {
-          SUPPLIER_PART_NUMBER: part.SUPPLIER_PART_NUMBER,
-          DIGIKEY_PART_NUMBER: digikeyTd.querySelector("input").value.trim(),
-          QUANTITY: parseInt(qtyTd.querySelector("input").value.trim()),
-          LOCATION: locationTd.querySelector("input").value.trim(),
-          TYPE: typeTd.querySelector("input").value.trim(),
-          VALUE: valueTd.querySelector("input").value.trim(),
-          FOOTPRINT: footprintTd.querySelector("input").value.trim()
-        };
-
-        digikeyTd.textContent = updated.DIGIKEY_PART_NUMBER;
-        qtyTd.innerHTML = `${updated.QUANTITY} <span class="edit-icon">✎</span>`;
-        locationTd.textContent = updated.LOCATION;
-        typeTd.textContent = updated.TYPE;
-        valueTd.textContent = updated.VALUE;
-        footprintTd.textContent = updated.FOOTPRINT;
-
-        updatePart(updated);
-      }
-    });
-
-    actionsTd.appendChild(editBtn);
-
-    row.appendChild(supplierTd);
-    row.appendChild(digikeyTd);
-    row.appendChild(qtyTd);
-    row.appendChild(locationTd);
-    row.appendChild(typeTd);
-    row.appendChild(valueTd);
-    row.appendChild(footprintTd);
-    row.appendChild(actionsTd);
 
     tbody.appendChild(row);
-  });
+  }
+
+  table.appendChild(tbody);
 }
+
+
+
+
 
 document.getElementById("clearFilter").addEventListener("click", () => {
   document.getElementById("typeSelect").value = "";
