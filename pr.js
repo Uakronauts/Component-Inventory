@@ -12,7 +12,7 @@ document.getElementById("submitPrMode").addEventListener("click", () => {
   const checkedBoxes = document.querySelectorAll(".pr-checkbox:checked");
   const selectedParts = Array.from(checkedBoxes).map(box => box.dataset.partnum);
   console.log("Selected for PR:", selectedParts);
-
+  console.log(token)
   // get DigiKey token
   fetch(url, {
     method: "POST",
