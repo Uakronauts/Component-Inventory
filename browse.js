@@ -308,24 +308,22 @@ function initializeFilters(parts) {
 //   });
 // }
 
-
 function renderPartsTable(parts) {
   const theadRow = document.querySelector("#partsTable thead tr");
   const tbody = document.querySelector("#partsTable tbody");
 
-  // Reset table body
+  // Clear previous content
+  theadRow.innerHTML = "";
   tbody.innerHTML = "";
 
-  // Reset header
-  theadRow.innerHTML = "";
-
-  // Build header
+  // Optional select checkbox column
   if (prMode) {
     const th = document.createElement("th");
     th.textContent = "Select";
     theadRow.appendChild(th);
   }
 
+  // Define columns (omit ACTIONS in prMode)
   const headers = [
     "SUPPLIER_PART_NUMBER",
     "DIGIKEY_PART_NUMBER",
@@ -333,9 +331,10 @@ function renderPartsTable(parts) {
     "LOCATION",
     "TYPE",
     "VALUE",
-    "FOOTPRINT",
-    "ACTIONS"
+    "FOOTPRINT"
   ];
+
+  if (!prMode) headers.push("ACTIONS");
 
   headers.forEach(h => {
     const th = document.createElement("th");
@@ -343,7 +342,7 @@ function renderPartsTable(parts) {
     theadRow.appendChild(th);
   });
 
-  // Build body
+  // Build table rows
   parts.forEach(part => {
     const row = document.createElement("tr");
 
@@ -378,44 +377,7 @@ function renderPartsTable(parts) {
     const footprintTd = document.createElement("td");
     footprintTd.textContent = part.FOOTPRINT;
 
-    const actionsTd = document.createElement("td");
-    const editBtn = document.createElement("button");
-    editBtn.textContent = "✎";
-    editBtn.addEventListener("click", () => {
-      if (editBtn.textContent === "✎") {
-        editBtn.textContent = "💾";
-
-        [digikeyTd, qtyTd, locationTd, typeTd, valueTd, footprintTd].forEach(td => {
-          const val = td.textContent.replace(/ ✎$/, "");
-          td.dataset.oldValue = val;
-          td.innerHTML = `<input type="text" value="${val}" style="width: 100%;">`;
-        });
-      } else {
-        editBtn.textContent = "✎";
-
-        const updated = {
-          SUPPLIER_PART_NUMBER: part.SUPPLIER_PART_NUMBER,
-          DIGIKEY_PART_NUMBER: digikeyTd.querySelector("input").value.trim(),
-          QUANTITY: parseInt(qtyTd.querySelector("input").value.trim()),
-          LOCATION: locationTd.querySelector("input").value.trim(),
-          TYPE: typeTd.querySelector("input").value.trim(),
-          VALUE: valueTd.querySelector("input").value.trim(),
-          FOOTPRINT: footprintTd.querySelector("input").value.trim()
-        };
-
-        digikeyTd.textContent = updated.DIGIKEY_PART_NUMBER;
-        qtyTd.innerHTML = `${updated.QUANTITY} <span class="edit-icon">✎</span>`;
-        locationTd.textContent = updated.LOCATION;
-        typeTd.textContent = updated.TYPE;
-        valueTd.textContent = updated.VALUE;
-        footprintTd.textContent = updated.FOOTPRINT;
-
-        updatePart(updated);
-      }
-    });
-
-    actionsTd.appendChild(editBtn);
-
+    // Add cells to row
     row.appendChild(supplierTd);
     row.appendChild(digikeyTd);
     row.appendChild(qtyTd);
@@ -423,11 +385,53 @@ function renderPartsTable(parts) {
     row.appendChild(typeTd);
     row.appendChild(valueTd);
     row.appendChild(footprintTd);
-    row.appendChild(actionsTd);
+
+    // Optional actions column
+    if (!prMode) {
+      const actionsTd = document.createElement("td");
+      const editBtn = document.createElement("button");
+      editBtn.textContent = "✎";
+
+      editBtn.addEventListener("click", () => {
+        if (editBtn.textContent === "✎") {
+          editBtn.textContent = "💾";
+          [digikeyTd, qtyTd, locationTd, typeTd, valueTd, footprintTd].forEach(td => {
+            const val = td.textContent.replace(/ ✎$/, "");
+            td.dataset.oldValue = val;
+            td.innerHTML = `<input type="text" value="${val}" style="width: 100%;">`;
+          });
+        } else {
+          editBtn.textContent = "✎";
+
+          const updated = {
+            SUPPLIER_PART_NUMBER: part.SUPPLIER_PART_NUMBER,
+            DIGIKEY_PART_NUMBER: digikeyTd.querySelector("input").value.trim(),
+            QUANTITY: parseInt(qtyTd.querySelector("input").value.trim()),
+            LOCATION: locationTd.querySelector("input").value.trim(),
+            TYPE: typeTd.querySelector("input").value.trim(),
+            VALUE: valueTd.querySelector("input").value.trim(),
+            FOOTPRINT: footprintTd.querySelector("input").value.trim()
+          };
+
+          digikeyTd.textContent = updated.DIGIKEY_PART_NUMBER;
+          qtyTd.innerHTML = `${updated.QUANTITY} <span class="edit-icon">✎</span>`;
+          locationTd.textContent = updated.LOCATION;
+          typeTd.textContent = updated.TYPE;
+          valueTd.textContent = updated.VALUE;
+          footprintTd.textContent = updated.FOOTPRINT;
+
+          updatePart(updated);
+        }
+      });
+
+      actionsTd.appendChild(editBtn);
+      row.appendChild(actionsTd);
+    }
 
     tbody.appendChild(row);
   });
 }
+
 
 
 
