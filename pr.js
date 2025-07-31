@@ -109,10 +109,11 @@ function openDigiKeyPopup() {
 
 function submitPurchaseRequest(token) {
   const checkedBoxes = document.querySelectorAll(".pr-checkbox:checked");
+  console.log(checkedBoxes)
   const partNumbers = Array.from(checkedBoxes).map(cb => cb.dataset.partnum);
   console.log(partNumbers)
 
-  
+
   if (partNumbers.length === 0) {
     alert("No parts selected.");
     return;
