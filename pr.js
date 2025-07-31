@@ -128,7 +128,7 @@ function submitPurchaseRequest(token) {
     },
     body: JSON.stringify({
       ListName: "Akronauts PR List",
-      Items: partNumbers.map(pn => ({ ManufacturerPartNumber: pn }))
+      Items: partNumbers.map(pn => ({ DigiKeyPartNumber: pn }))
     })
   })
   .then(res => res.text())
