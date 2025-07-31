@@ -116,6 +116,10 @@ function submitPurchaseRequest(token) {
     return;
   }
 
+   console.log(token)
+   console.log(dgToken)
+   console.log(dgClientId)
+
   fetch("https://api.digikey.com/mylists/v1/lists", {
     method: "POST",
     headers: {
@@ -128,8 +132,9 @@ function submitPurchaseRequest(token) {
       Items: partNumbers.map(pn => ({ ManufacturerPartNumber: pn }))
     })
   })
-  .then(res => res.json())
+  .then(res => res.text())
   .then(data => {
+    console.log(data)
     alert("List created!\n" + (data.WebLink || JSON.stringify(data)));
   })
   .catch(err => {
