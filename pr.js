@@ -15,8 +15,13 @@ document.getElementById("submitPrMode").addEventListener("click", () => {
 
   // get DigiKey token
   fetch(url, {
-    mode: "token",
-    token: token
+    method: "POST",
+    headers: { "Content-Type": "text/plain" },
+    body: JSON.stringify({
+      mode: "token",
+      "token": token
+    })
+
   })
   .then(response => response.text())
   .then(data => {
