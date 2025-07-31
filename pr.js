@@ -110,15 +110,13 @@ function openDigiKeyPopup() {
 function submitPurchaseRequest(token) {
   const checkedBoxes = document.querySelectorAll(".pr-checkbox:checked");
   const partNumbers = Array.from(checkedBoxes).map(cb => cb.dataset.partnum);
+  console.log(partNumbers)
 
+  
   if (partNumbers.length === 0) {
     alert("No parts selected.");
     return;
   }
-
-   console.log(token)
-   console.log(dgToken)
-   console.log(dgClientId)
 
   fetch("https://api.digikey.com/mylists/v1/lists", {
     method: "POST",
