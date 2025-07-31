@@ -327,7 +327,7 @@ function renderPartsTable(parts) {
   const headers = [
     "SUPPLIER_PART_NUMBER",
     "DIGIKEY_PART_NUMBER",
-    "QUANTITY",
+    "QTY",
     "LOCATION",
     "TYPE",
     "VALUE",
