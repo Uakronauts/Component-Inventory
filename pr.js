@@ -73,7 +73,7 @@ document.getElementById("submitPrMode").addEventListener("click", () => {
 
 
 
-const redirectUri = window.location.origin + "/digikey-popup.html"; // You'll create this file
+const redirectUri = window.location.origin + "/Component-Inventory/digikey-popup.html"; // You'll create this file
 
 // document.getElementById("submitPrMode").addEventListener("click", async () => {
 //   const token = localStorage.getItem("digikey_token");
