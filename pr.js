@@ -12,7 +12,6 @@ document.getElementById("submitPrMode").addEventListener("click", () => {
   const checkedBoxes = document.querySelectorAll(".pr-checkbox:checked");
   const selectedParts = Array.from(checkedBoxes).map(box => box.dataset.partnum);
   console.log("Selected for PR:", selectedParts);
-  console.log(token)
   // get DigiKey token
   fetch(url, {
     method: "POST",
@@ -35,7 +34,7 @@ document.getElementById("submitPrMode").addEventListener("click", () => {
     if (!token) {
       openDigiKeyPopup();
     } else {
-      submitPurchaseRequest(token);
+      submitPurchaseRequest(dgToken);
     }
 
 
@@ -121,7 +120,7 @@ function submitPurchaseRequest(token) {
     method: "POST",
     headers: {
       "Authorization": `Bearer ${token}`,
-      "X-DIGIKEY-Client-Id": clientId,
+      "X-DIGIKEY-Client-Id": dgClientId,
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
