@@ -43,6 +43,7 @@
       <div id="start-overlay">Click to Start Camera</div>
     </div>
 
+
     <div id="manualEntryWrapper" style="display:none; padding:1em;">
       <label for="supplierSelect">Supplier:</label>
       <select id="supplierSelect">
@@ -60,6 +61,10 @@
     <pre><code id="result"></code></pre>
     <p id="raw" class="hidden">raw</p>
     <p id="parsed" class="hidden">parsed</p>
+
+    <button onclick="toggleManualEntryMode(true)">Manual Entry Mode</button>
+    <button onclick="toggleManualEntryMode(false)">Return to Scanner</button>
+
   <div class="container">
     <div class="column">
       <h2>Scanned Data</h2>
