@@ -475,3 +475,17 @@ function updatePricing(){
     console.log("Fill pricing results:", data);
   })
 }
+
+// hide PR mode on mobile devices because it is a PITA to style
+function isMobileDevice() {
+  return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  if (isMobileDevice()) {
+    const prButton = document.getElementById("togglePrMode");
+    if (prButton) {
+      prButton.style.display = "none";
+    }
+  }
+});
