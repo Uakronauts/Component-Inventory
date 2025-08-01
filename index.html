@@ -43,6 +43,19 @@
       <div id="start-overlay">Click to Start Camera</div>
     </div>
 
+    <div id="manualEntryWrapper" style="display:none; padding:1em;">
+      <label for="supplierSelect">Supplier:</label>
+      <select id="supplierSelect">
+        <option value="Digi-Key">Digi-Key</option>
+        <option value="Mouser">Mouser</option>
+      </select>
+
+      <label for="supplierPartInput">Supplier Part Number:</label>
+      <input type="text" id="supplierPartInput" placeholder="e.g. TPS7A4700RGWR" />
+
+      <button onclick="lookupSupplierPart()">Lookup Part</button>
+    </div>
+
     <!-- <label>Result:</label> -->
     <pre><code id="result"></code></pre>
     <p id="raw" class="hidden">raw</p>

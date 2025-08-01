@@ -489,3 +489,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 });
+
+function toggleManualEntryMode(enable) {
+  document.getElementById("videoWrapper").style.display = enable ? "none" : "block";
+  document.getElementById("manualEntryWrapper").style.display = enable ? "block" : "none";
+}
