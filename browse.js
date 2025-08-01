@@ -122,37 +122,6 @@ function applyFilters() {
   renderPartsTable(filtered);
 }
 
-// function updateSelectOptions(parts) {
-//   const typeSelect = document.getElementById("typeSelect");
-//   const valueSelect = document.getElementById("valueSelect");
-//   const footprintSelect = document.getElementById("footprintSelect");
-
-//   // Populate TYPE select
-//   const uniqueTypes = [...new Set(parts.map(p => p.TYPE).filter(Boolean))];
-//   typeSelect.innerHTML = `<option value="">All</option>` +
-//     uniqueTypes.map(type => `<option value="${type}">${type}</option>`).join('');
-
-//   // When TYPE changes
-//   typeSelect.onchange = () => {
-//     const selectedType = typeSelect.value;
-//     const filteredParts = selectedType ? parts.filter(p => p.TYPE === selectedType) : parts;
-
-//     // Update VALUE and FOOTPRINT selects based on selected TYPE
-//     updateDependentSelect(valueSelect, filteredParts, "VALUE");
-//     updateDependentSelect(footprintSelect, filteredParts, "FOOTPRINT");
-
-//     // Enable or disable selects
-//     valueSelect.disabled = !selectedType;
-//     footprintSelect.disabled = !selectedType;
-
-//     applyFilters();
-//   };
-
-//   // When VALUE or FOOTPRINT changes
-//   valueSelect.onchange = applyFilters;
-//   footprintSelect.onchange = applyFilters;
-// }
-
 function updateAllSelects() {
   const typeSelect = document.getElementById("typeSelect");
   const valueSelect = document.getElementById("valueSelect");
@@ -206,107 +175,6 @@ function initializeFilters(parts) {
   allParts = parts;
   updateAllSelects(); 
 }
-
-
-// function renderPartsTable(parts) {
-//   const tbody = document.querySelector("#partsTable tbody");
-//   tbody.innerHTML = "";
-
-//   parts.forEach(part => {
-//     const row = document.createElement("tr");
-
-//     const supplierTd = document.createElement("td");
-//     supplierTd.textContent = part.SUPPLIER_PART_NUMBER;
-
-//     const digikeyTd = document.createElement("td");
-//     digikeyTd.textContent = part.DIGIKEY_PART_NUMBER;
-
-//     const qtyTd = document.createElement("td");
-//     qtyTd.innerHTML = `${part.QUANTITY}`;
-
-//     if (prMode) {
-//       const checkboxTd = document.createElement("td");
-//       const checkbox = document.createElement("input");
-//       checkbox.type = "checkbox";
-//       checkbox.className = "pr-checkbox";
-//       checkbox.dataset.partnum = part.DIGIKEY_PART_NUMBER;
-//       checkboxTd.appendChild(checkbox);
-//       row.appendChild(checkboxTd);
-//     }
-
-//     if (prMode) {
-//       const th = document.createElement("th");
-//       th.textContent = "Select";
-//       document.querySelector("#partsTable thead tr").prepend(th);
-//     }
-
-//     const locationTd = document.createElement("td");
-//     locationTd.textContent = part.LOCATION;
-
-//     const typeTd = document.createElement("td");
-//     typeTd.textContent = part.TYPE;
-
-//     const valueTd = document.createElement("td");
-//     valueTd.textContent = part.VALUE;
-
-//     const footprintTd = document.createElement("td");
-//     footprintTd.textContent = part.FOOTPRINT;
-
-//     const actionsTd = document.createElement("td");
-
-//     const editBtn = document.createElement("button");
-//     editBtn.textContent = "✎";
-//     editBtn.addEventListener("click", () => {
-//       if (editBtn.textContent === "✎") {
-//         // Enter edit mode
-//         editBtn.textContent = "💾";
-
-//         // Replace editable cells with input elements
-//         [digikeyTd, qtyTd, locationTd, typeTd, valueTd, footprintTd].forEach(td => {
-//           const val = td.textContent.replace(/ ✎$/, ""); // remove icon if needed
-//           td.dataset.oldValue = val;
-//           td.innerHTML = `<input type="text" value="${val}" style="width: 100%;">`;
-//         });
-
-//       } else {
-//         // Save edits
-//         editBtn.textContent = "✎";
-
-//         const updated = {
-//           SUPPLIER_PART_NUMBER: part.SUPPLIER_PART_NUMBER,
-//           DIGIKEY_PART_NUMBER: digikeyTd.querySelector("input").value.trim(),
-//           QUANTITY: parseInt(qtyTd.querySelector("input").value.trim()),
-//           LOCATION: locationTd.querySelector("input").value.trim(),
-//           TYPE: typeTd.querySelector("input").value.trim(),
-//           VALUE: valueTd.querySelector("input").value.trim(),
-//           FOOTPRINT: footprintTd.querySelector("input").value.trim()
-//         };
-
-//         digikeyTd.textContent = updated.DIGIKEY_PART_NUMBER;
-//         qtyTd.innerHTML = `${updated.QUANTITY} <span class="edit-icon">✎</span>`;
-//         locationTd.textContent = updated.LOCATION;
-//         typeTd.textContent = updated.TYPE;
-//         valueTd.textContent = updated.VALUE;
-//         footprintTd.textContent = updated.FOOTPRINT;
-
-//         updatePart(updated);
-//       }
-//     });
-
-//     actionsTd.appendChild(editBtn);
-
-//     row.appendChild(supplierTd);
-//     row.appendChild(digikeyTd);
-//     row.appendChild(qtyTd);
-//     row.appendChild(locationTd);
-//     row.appendChild(typeTd);
-//     row.appendChild(valueTd);
-//     row.appendChild(footprintTd);
-//     row.appendChild(actionsTd);
-
-//     tbody.appendChild(row);
-//   });
-// }
 
 function renderPartsTable(parts) {
   const theadRow = document.querySelector("#partsTable thead tr");
@@ -481,16 +349,46 @@ function isMobileDevice() {
   return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  if (isMobileDevice()) {
-    const prButton = document.getElementById("togglePrMode");
-    if (prButton) {
-      prButton.style.display = "none";
-    }
-  }
-});
+// document.addEventListener("DOMContentLoaded", function () {
+//   if (isMobileDevice()) {
+//     const prButton = document.getElementById("togglePrMode");
+//     if (prButton) {
+//       prButton.style.display = "none";
+//     }
+//   }
+// });
 
-function toggleManualEntryMode(enable) {
-  document.getElementById("videoWrapper").style.display = enable ? "none" : "block";
-  document.getElementById("manualEntryWrapper").style.display = enable ? "block" : "none";
-}
+// function toggleManualEntryMode(enable) {
+//   document.getElementById("videoWrapper").style.display = enable ? "none" : "block";
+//   document.getElementById("manualEntryWrapper").style.display = enable ? "block" : "none";
+// }
+
+// async function lookupSupplierPart() {
+//   const supplier = document.getElementById("supplierSelect").value;
+//   const supplierPart = document.getElementById("supplierPartInput").value.trim();
+
+//   if (!supplierPart) return alert("Enter a part number");
+
+//   if (supplier === "Digi-Key") {
+//     const result = await fetchDigiKeyData(supplierPart);
+//     if (result) addRowToPartsTable(result, supplier);
+//   } else {
+//     alert("Only Digi-Key supported for now.");
+//   }
+// }
+
+// function fetchDigiKeyData(supplierPart) {
+//   fetch(url, {
+//       method: "POST",
+//       headers: { "Content-Type": "text/plain" },
+//       body: JSON.stringify({
+//         SUPPLIER_PART_NUMBER: lastScannedPart["SUPPLIER_PART_NUMBER"],
+//         mode: "manual",
+//         token: token
+//       })
+//     })
+//     .then(res => res.text())
+//     .then(data => {
+//       console.log("Part info:", data)
+//   })
+// }

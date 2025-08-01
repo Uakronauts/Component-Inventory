@@ -221,39 +221,6 @@ function fakeData(){
 
 const url = "https://script.google.com/macros/s/AKfycbxmCclSl1FJxoZDDWAU_hVKPnQoVfNFi7hTNNCH2m9RdR9EWSDvSRnJpKdR4jcC8Nhj/exec";
 
-// document.getElementById("add-part").addEventListener("click", () => {
-//     let location = prompt("Enter part location:", "N/A");
-//   if (location === null || location.trim() === "") {
-//     location = "undefined";
-//   }
-
-//   showDbSpinner();
-
-//   fetch(url, {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "text/plain"
-//     },
-//     body: JSON.stringify({
-//       "SUPPLIER_PART_NUMBER": lastScannedPart["SUPPLIER_PART_NUMBER"],
-//       "DIGIKEY_PART_NUMBER": lastScannedPart["DIGIKEY_PART_NUMBER"],
-//       "QUANTITY": lastScannedPart["QUANTITY"],
-//       "LOCATION": location,
-//       "mode": "add",
-//       "token": token
-//     })
-//   })
-//   .then(response => response.text())
-//   .then(data => {
-//     console.log("Success:", data);
-//     checkPart();
-//     fetchAndDisplayParts();
-//   })
-//   .catch(error => console.error("Error:", error))
-//   .finally(() => {
-//     hideDbSpinner();
-//   });
-// })
 
 const addModal = document.getElementById("addModal");
 const addQtyInput = document.getElementById("addQty");
